@@ -1,6 +1,6 @@
 ---
 title: "trend"
-output: rmarkdown::github_document
+output: github_document
 ---
 
 ## trend analysis
