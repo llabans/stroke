@@ -3,14 +3,14 @@ title: "trend"
 output: rmarkdown::github_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=TRUE}
 knitr::opts_chunk$set(echo = TRUE)
 
 ```
 
 ## trend analysis
 
-```{r stroke14} ```{r stroke15}
+```{r}
 
 library(tidyverse)
 
@@ -45,7 +45,7 @@ stroke15
 
 ##  Trend test
 
-```{r , echo=FALSE}
+```{r , echo=TRUE}
 
 library(trend)
 partial.cor.trend.test(stroke14$percent1,stroke14$percent2, method = "spearman")
