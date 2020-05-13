@@ -3,7 +3,7 @@ Trends
 LMLS
 2020-05-13
 
-## trend analysis
+## DB
 
 ``` r
 library(tidyverse)
@@ -25,8 +25,60 @@ stroke <- read.csv("stroke.csv")
 stroke_sexo <- subset(stroke, select = c(year,sexo)) 
 stroke_s1 <- stroke_sexo %>%
   group_by(year) %>%
-  summarise(total = n()) 
+  summarise(total = n())
+```
 
+## Base
+
+``` r
+stroke_sexo[1:16,]
+```
+
+    ##    year  sexo
+    ## 1  2012   Men
+    ## 2  2012   Men
+    ## 3  2017 Women
+    ## 4  2017   Men
+    ## 5  2017   Men
+    ## 6  2017 Women
+    ## 7  2017 Women
+    ## 8  2017   Men
+    ## 9  2017   Men
+    ## 10 2017   Men
+    ## 11 2017 Women
+    ## 12 2017 Women
+    ## 13 2017 Women
+    ## 14 2017 Women
+    ## 15 2017   Men
+    ## 16 2017   Men
+
+``` r
+stroke_s1[1:16,]
+```
+
+    ## # A tibble: 16 x 2
+    ##     year total
+    ##    <int> <int>
+    ##  1  2002  1424
+    ##  2  2003  1503
+    ##  3  2004  1625
+    ##  4  2005  2192
+    ##  5  2006  2285
+    ##  6  2007  2269
+    ##  7  2008  2425
+    ##  8  2009  2518
+    ##  9  2010  2988
+    ## 10  2011  2834
+    ## 11  2012  2836
+    ## 12  2013  3154
+    ## 13  2014  3250
+    ## 14  2015  2953
+    ## 15  2016  2599
+    ## 16  2017  2955
+
+## Datset
+
+``` r
 strokefemale <- subset(stroke, stroke$sexo=="Women", select = c(year))
 strokefemale <- strokefemale%>%group_by(year)%>%dplyr::summarise(women = n())
 strokemale <- subset(stroke, stroke$sexo=="Men", select = c(year))
