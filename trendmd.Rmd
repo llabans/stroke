@@ -3,11 +3,6 @@ title: "trend"
 output: rmarkdown::github_document
 ---
 
-```{r setup, include=TRUE}
-knitr::opts_chunk$set(echo = TRUE)
-
-```
-
 ## trend analysis
 
 ```{r}
@@ -45,7 +40,7 @@ stroke15
 
 ##  Trend test
 
-```{r , echo=TRUE}
+```{r}
 
 library(trend)
 partial.cor.trend.test(stroke14$percent1,stroke14$percent2, method = "spearman")
