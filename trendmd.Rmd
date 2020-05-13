@@ -5,6 +5,7 @@ output: rmarkdown::github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 ## trend analysis
@@ -12,6 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r stroke14} ```{r stroke15}
 
 library(tidyverse)
+
+stroke <- read.csv("stroke.csv")
 stroke_sexo <- subset(stroke, select = c(year,sexo)) 
 stroke_s1 <- stroke_sexo %>%
   group_by(year) %>%
@@ -48,5 +51,3 @@ library(trend)
 partial.cor.trend.test(stroke14$percent1,stroke14$percent2, method = "spearman")
 partial.cor.trend.test(stroke15$percent1,stroke15$percent2, method = "spearman")
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
