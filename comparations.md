@@ -21,6 +21,13 @@ library(tidyverse)
     ## x dplyr::lag()    masks stats::lag()
 
 ``` r
+library()
+```
+
+    ## Warning in library(): libraries '/usr/local/lib/R/site-library', '/usr/lib/R/
+    ## site-library' contain no packages
+
+``` r
 setwd("~/Documentos/R/Stroke/")
 stroke <- read.csv("stroke.csv")
 glimpse(stroke)
@@ -78,14 +85,37 @@ strokerelos[1:20,]
 ## Kruskal-Wallis test & LOS by regions
 
 ``` r
-kruskal.test(los ~ regions, data = strokerelos)
+stroke$cid10 <- as.factor(stroke$cid10)
+levels(stroke$cid10)
+```
+
+    ## [1] "I60" "I61" "I63" "I64"
+
+``` r
+kruskal.test(los ~ regions, data = stroke)
 ```
 
     ## 
     ##  Kruskal-Wallis rank sum test
     ## 
     ## data:  los by regions
-    ## Kruskal-Wallis chi-squared = 2206.1, df = 1, p-value < 2.2e-16
+    ## Kruskal-Wallis chi-squared = 3273.8, df = 3, p-value < 2.2e-16
+
+``` r
+pairwise.wilcox.test(stroke$los, stroke$regions, p.adjust.method = "BH")
+```
+
+    ## 
+    ##  Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
+    ## 
+    ## data:  stroke$los and stroke$regions 
+    ## 
+    ##             Lima/Callao Resto Costa Selva 
+    ## Resto Costa <2e-16      -           -     
+    ## Selva       <2e-16      <2e-16      -     
+    ## Sierra      <2e-16      <2e-16      <2e-16
+    ## 
+    ## P value adjustment method: BH
 
 ## Kruskal-Wallis test & LOS by facilities
 
@@ -132,3 +162,66 @@ kruskal.test(los ~ level, data = strokefacilities)
     ## 
     ## data:  los by level
     ## Kruskal-Wallis chi-squared = 4636.8, df = 1, p-value < 2.2e-16
+
+## Years ~ figures
+
+``` r
+stroke$cid10 <- as.factor(stroke$cid10)
+levels(stroke$cid10)
+```
+
+    ## [1] "I60" "I61" "I63" "I64"
+
+``` r
+kruskal.test(los ~ cid10, data = stroke)
+```
+
+    ## 
+    ##  Kruskal-Wallis rank sum test
+    ## 
+    ## data:  los by cid10
+    ## Kruskal-Wallis chi-squared = 2881, df = 3, p-value < 2.2e-16
+
+``` r
+pairwise.wilcox.test(stroke$los, stroke$year, p.adjust.method = "BH")
+```
+
+    ## 
+    ##  Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
+    ## 
+    ## data:  stroke$los and stroke$year 
+    ## 
+    ##      2002    2003    2004    2005    2006    2007    2008    2009    2010   
+    ## 2003 0.09685 -       -       -       -       -       -       -       -      
+    ## 2004 0.89123 0.07174 -       -       -       -       -       -       -      
+    ## 2005 0.54892 0.01606 0.65627 -       -       -       -       -       -      
+    ## 2006 0.40968 0.34814 0.32204 0.09508 -       -       -       -       -      
+    ## 2007 0.28606 0.49069 0.20669 0.05174 0.79998 -       -       -       -      
+    ## 2008 0.08957 0.81729 0.05857 0.00739 0.39549 0.55035 -       -       -      
+    ## 2009 0.05580 0.94533 0.03880 0.00385 0.28606 0.40968 0.81006 -       -      
+    ## 2010 2.4e-07 0.00238 4.8e-08 2.9e-11 1.2e-06 5.2e-06 4.3e-05 0.00010 -      
+    ## 2011 0.07781 0.87187 0.04900 0.00534 0.33979 0.51180 0.92623 0.89112 4.3e-05
+    ## 2012 0.00050 0.16440 0.00016 2.3e-06 0.00385 0.00938 0.04661 0.07782 0.04661
+    ## 2013 0.00018 0.14188 7.4e-05 5.7e-07 0.00215 0.00533 0.02914 0.05439 0.04093
+    ## 2014 0.00595 0.52317 0.00333 9.9e-05 0.04661 0.08757 0.28121 0.38459 0.00238
+    ## 2015 2.4e-05 0.03905 6.5e-06 3.8e-08 0.00016 0.00057 0.00356 0.00739 0.27769
+    ## 2016 0.14844 0.66954 0.09492 0.01726 0.54339 0.76207 0.80957 0.63495 1.1e-05
+    ## 2017 0.00534 0.55035 0.00302 8.9e-05 0.04661 0.09030 0.28918 0.40968 0.00138
+    ##      2011    2012    2013    2014    2015    2016   
+    ## 2003 -       -       -       -       -       -      
+    ## 2004 -       -       -       -       -       -      
+    ## 2005 -       -       -       -       -       -      
+    ## 2006 -       -       -       -       -       -      
+    ## 2007 -       -       -       -       -       -      
+    ## 2008 -       -       -       -       -       -      
+    ## 2009 -       -       -       -       -       -      
+    ## 2010 -       -       -       -       -       -      
+    ## 2011 -       -       -       -       -       -      
+    ## 2012 0.05122 -       -       -       -       -      
+    ## 2013 0.03701 0.93017 -       -       -       -      
+    ## 2014 0.29833 0.36365 0.32333 -       -       -      
+    ## 2015 0.00385 0.40793 0.40968 0.06863 -       -      
+    ## 2016 0.75276 0.02135 0.01163 0.16440 0.00141 -      
+    ## 2017 0.32577 0.32577 0.27769 0.92623 0.05247 0.17067
+    ## 
+    ## P value adjustment method: BH
