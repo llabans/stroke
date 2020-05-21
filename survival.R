@@ -71,5 +71,33 @@ ehawb2 <- aftreg(survivalobj0 ~ exposure+agecat+sexo+strata(regions,level), dist
 ehawb2
 exp(confint(ehawb2))
 
+#################################################################################
+#Creating survival plot
+
+install.packages('survminer')
+
+library(survminer)
+library(ggpubr)
+library(survival)
+
+y2016deaths$cid10 <- factor(y2016deaths$cid10, levels = c("I60","I61","I63","I64"), labels = c("Subarachnoid Hemorrhage (I60)", "Intra-cerebral Hemorrhage (I61)", "Cerebral Infarction (I63)", "Stroke not specified (I64)"))
+names(y2016deaths)[names(y2016deaths) == "cid10"] <- 'ICD-10'
+losfit <- survfit(Surv(y2016deaths$los, y2016deaths$condicion=="Death") ~ y2016deaths$'ICD-10',
+                  data = y2016deaths)
+
+palette()               # obtain the current palette
+
+(palette(gray(seq(0,.9,len = 25)))) # gray scales; print old palette
+matplot(outer(1:100, 1:30), type = "l", lty = 1,lwd = 2, col = 1:30,
+        main = "Gray Scales Palette",
+        sub = "palette(gray(seq(0, .9, len=25)))")
+palette("default")      # reset back to the default
+
+# Visualize with survminer
+ggsurvplot(losfit, data = y2016deaths, main = "Survival curve",
+           submain = "Based on Kaplan-Meier estimates", legend = c(0.1, 0.2),
+           legend.title = "Strata",  risk.table = TRUE, xlim = c(0,30),
+           break.time.by = 5, risk.table.y.text.col = T, risk.table.y.text = FALSE, conf.int = TRUE,conf.int.style=c("ribbon"), pval = TRUE, palette = gray(0:4/4))
+
 
 
