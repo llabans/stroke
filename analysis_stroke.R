@@ -16,6 +16,10 @@ library(ggplot2)
 library(coxme)
 library(tidyr)
 library(lattice)
+library(tidyverse)
+library(purrr)
+library(gglop)
+library(EnvStats)
 
 ###FUNCTIONS
 number_ticks <- function(n) {function(limits) pretty(limits, n)}
@@ -27,9 +31,15 @@ g_legend<-function(a.gplot){
   return(legend)}
 
 ###LOAD DATA
-setwd("/home/init5/R/Stroke/")
+setwd("~/Documentos/R/Stroke/")
 stroke <- read.csv("./stroke.csv")
+stroke$los <- as.numeric(stroke$los)
+stroke$year <- as.factor(stroke$year)
 levels(as.factor(stroke$year))
+
+
+View(strokesex)
+
 ###SUMMARY OF LOS BY YEAR
 by_year <- stroke %>%
   group_by(year) %>%
@@ -38,58 +48,22 @@ by_year <- stroke %>%
             "Median" = quantile(los, probs=0.5,na.rm = TRUE), 
             "Q3" = quantile(los, probs=0.75,na.rm = TRUE), 
             "n"=n())
+by_year
+
 #Count
 stroke %>% dplyr::count(los)
 
 #Variables
 stroke %>% glimpse()
-losall <- ggplot2::ggplot(by_year, aes(x=year, y=Median,colour=factor(year)))+
-  scale_color_hue(labels = c("2002 (p=1.0)","2003 (p=1.0)","2004 (p=1.0)","2005 (p=0.410)","2006 (p=1.0)","2007 (p=1.0)","2008 (p=1.0)","2009 (p=1.0)","2010 (p<0.001)","2011 (p=1.0)","2012 (p=0.488)","2013 (p=0.280)", "2014 (p=1.0)","2015 (p=0.017)","2016", "2017 (p=1.0)"))+
+losall <- ggplot2::ggplot(by_year, aes(x=year, y=Median,colour=year), size(year))+
   labs(color="Year")+
-  #scale_x_discrete(limits=c("2011 (p<0.05)","2012 (p<0.001)","2013 (p<0.001)", "2014 (p>0.05)","2015 (p<0.001)","2016 (p>0.05)", "2017"))+
   geom_point(size=4)+
-  #geom_point(aes(color=Disease), alpha=1, size=5)+
-  #geom_text(label=losmistroke$Median, size=3, color="white")
-  #geom_line()+
   scale_y_continuous(breaks = c(0,3,6,9,12,15,18), limits = c(0,18))+
   theme_bw()+
-  theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x = element_blank(), axis.ticks.x = element_blank())+
-  #theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
-  #scale_x_continuous(breaks=number_ticks(12))+
-  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
   labs(x="Years", y="Median Length of Hospitalization [days (IQR)]")+
-  geom_errorbar(by_year, mapping = aes(ymin=Q1, ymax=Q3), width=0.2, size=2)+
-  annotate("text",x=2002,y=0,label="2002")+
-  annotate("text",x=2003,y=0,label="2003")+
-  annotate("text",x=2004,y=0,label="2004")+
-  annotate("text",x=2005,y=0,label="2005")+
-  annotate("text",x=2006,y=0,label="2006")+
-  annotate("text",x=2007,y=0,label="2007")+
-  annotate("text",x=2008,y=0,label="2008")+
-  annotate("text",x=2009,y=0,label="2009")+
-  annotate("text",x=2010,y=0,label="2010")+
-  annotate("text",x=2011,y=0,label="2011")+
-  annotate("text",x=2012,y=0,label="2012")+
-  annotate("text",x=2013,y=0,label="2013")+
-  annotate("text",x=2014,y=0,label="2014")+
-  annotate("text",x=2015,y=0,label="2015")+
-  annotate("text",x=2016,y=0,label="2016")+
-  annotate("text",x=2017,y=0,label="2017")
+  geom_errorbar(by_year, mapping = aes(ymin=Q1, ymax=Q3), width=0.2, size=2)
+
 plot(losall)
-###SUMMARY OF LOS BY SEX
-#mimale <- subset(mi, mi$sexo=="Men", select = c(year, los))
-#mimale <- mimale%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                              losq1=quantile(los, c(.25)),
-#                                              losq3=quantile(los, c(.75)))
-#mifemale <- subset(mi, mi$sexo=="Women", select = c(year, los))
-#mifemale <- mifemale%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                              losq1=quantile(los, c(.25)),
-#                                              losq3=quantile(los, c(.75)))
-#mimale$sex <- 0
-#mifemale$sex <- 1
-#misex <- rbind(mimale, mifemale)
-#misex$sex <- factor(misex$sex, levels = c(0,1), labels = c("Men", "Women"))
-#rm(mimale, mifemale)
 
 strokemale <- subset(stroke, stroke$sexo=="Men", select = c(year, los))
 strokemale <- strokemale%>%group_by(year)%>%dplyr::summarise(losmediaan=median(los,na.rm=TRUE), 
@@ -104,13 +78,7 @@ strokefemale$Sex <- 1
 strokesex <- rbind(strokemale, strokefemale)
 strokesex$Sex <- factor(strokesex$Sex, levels = c(0,1), labels = c("Men", "Women"))
 rm(strokemale, strokefemale)
-
-#misex$year <- ifelse(misex$year==2011 & misex$sex=="Men", 2011.5, misex$year)
-#misex$year <- ifelse(misex$year==2012 & misex$sex=="Men", 2012.5, misex$year)
-#misex$year <- ifelse(misex$year==2013 & misex$sex=="Men", 2013.5, misex$year)
-#misex$year <- ifelse(misex$year==2014 & misex$sex=="Men", 2014.5, misex$year)
-#misex$year <- ifelse(misex$year==2015 & misex$sex=="Men", 2015.5, misex$year)
-#misex$year <- ifelse(misex$year==2016 & misex$sex=="Men", 2016.5, misex$year)
+strokesex
 strokesex$year <- ifelse(strokesex$year==2002 & strokesex$Sex=="Men", 2002.5, strokesex$year)
 strokesex$year <- ifelse(strokesex$year==2003 & strokesex$Sex=="Men", 2003.5, strokesex$year)
 strokesex$year <- ifelse(strokesex$year==2004 & strokesex$Sex=="Men", 2004.5, strokesex$year)
@@ -127,38 +95,12 @@ strokesex$year <- ifelse(strokesex$year==2014 & strokesex$Sex=="Men", 2014.5, st
 strokesex$year <- ifelse(strokesex$year==2015 & strokesex$Sex=="Men", 2015.5, strokesex$year)
 strokesex$year <- ifelse(strokesex$year==2016 & strokesex$Sex=="Men", 2016.5, strokesex$year)
 strokesex$year <- ifelse(strokesex$year==2017 & strokesex$Sex=="Men", 2017.5, strokesex$year)
-
-#sexmi <- ggplot(misex, aes(x=year, y=losmediaan, color=sex))+
-#  geom_point(size=4)+
-#  #geom_point(aes(color=Disease), alpha=1, size=5)+
-#  #geom_text(label=losmistroke$Median, size=3, color="white")
-#  #geom_line()+
-#  scale_y_continuous(breaks = c(0,3,6,9,12,15,18,21), limits = c(0,21))+
-#  theme_bw()+
-#  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())+
-#  #scale_x_continuous(breaks=number_ticks(12))+
-#  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
-#  labs(x="Years", y="Median Length of Hospitalization [days (IQR)]")+
-#  geom_errorbar(misex, mapping = aes(ymin=losq1, ymax=losq3), size=2)+
-#  annotate("text",x=2011.3,y=0,label="2011")+
-#  annotate("text",x=2012.3,y=0,label="2012")+
-#  annotate("text",x=2013.3,y=0,label="2013")+
-#  annotate("text",x=2014.3,y=0,label="2014")+
-#  annotate("text",x=2015.3,y=0,label="2015")+
-#  annotate("text",x=2016.3,y=0,label="2016")+
-#  annotate("text",x=2011.5,y=21,label="MI")
+plot(sexstroke)
 
 sexstroke <- ggplot(strokesex, aes(x=year, y=losmediaan, color=Sex))+
-  scale_color_hue(labels = c("Men (p=0.051)", "Women"))+
-    geom_point(size=4)+
-  #geom_point(aes(color=Disease), alpha=1, size=5)+
-  #geom_text(label=losmistroke$Median, size=3, color="white")
-  #geom_line()+
+  geom_point(size=4)+
   scale_y_continuous(breaks = c(0,3,6,9,12,15,18), limits = c(0,18))+
   theme_bw()+
-  theme(axis.text.x = element_blank(), axis.title.x = element_blank(), axis.title.y = element_blank(), axis.ticks.x = element_blank())+
-  #scale_x_continuous(breaks=number_ticks(12))+
-  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
   labs(x="Years", y="Median Length of Hospitalization [days (IQR)]")+
   geom_errorbar(strokesex, mapping = aes(ymin=losq1, ymax=losq3), size=2)+
   annotate("text",x=2002.25,y=0,label="2002")+
@@ -177,32 +119,9 @@ sexstroke <- ggplot(strokesex, aes(x=year, y=losmediaan, color=Sex))+
   annotate("text",x=2015.25,y=0,label="2015")+
   annotate("text",x=2016.25,y=0,label="2016")+
   annotate("text",x=2017.25,y=0,label="2017")
+strokesex
+
 plot(sexstroke)
-#sexlegend <- g_legend(sexmi)
-
-#sex <- grid.arrange(arrangeGrob(sexmi+theme(legend.position = "none"),
-#                         sexstroke+theme(legend.position = "none"),
-#                         nrow=1), sexlegend,nrow=2,heights=c(5,1))
-
-###SUMMARY OF LOS BY AGECAT
-#miage1 <- subset(mi, mi$agecat=="<55", select = c(year, los))
-#miage1 <- miage1%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                              losq1=quantile(los, c(.25)),
-#                                              losq3=quantile(los, c(.75)))
-#miage2 <- subset(mi, mi$agecat=="55-74", select = c(year, los))
-#miage2 <- miage2%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                              losq1=quantile(los, c(.25)),
-#                                              losq3=quantile(los, c(.75)))
-#miage3 <- subset(mi, mi$agecat=="75+", select = c(year, los))
-#miage3 <- miage3%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                              losq1=quantile(los, c(.25)),
-#                                              losq3=quantile(los, c(.75)))
-#miage1$agecat <- 1
-#miage2$agecat <- 2
-#miage3$agecat <- 3
-#miage <- rbind(miage1, miage2, miage3)
-#miage$agecat <- factor(miage$agecat, levels = c(1,2,3), labels = c("<55", "55-74", "75+"))
-#rm(miage1, miage2, miage3)
 
 strokeage1 <- subset(stroke, stroke$agecat=="<55", select = c(year, los))
 strokeage1 <- strokeage1%>%group_by(year)%>%dplyr::summarise(losmediaan=median(los,na.rm=TRUE), 
@@ -222,19 +141,6 @@ strokeage3$agecat <- 3
 strokeage <- rbind(strokeage1, strokeage2, strokeage3)
 strokeage$agecat <- factor(strokeage$agecat, levels = c(1,2,3), labels = c("<55", "55-74", "75+"))
 rm(strokeage1, strokeage2, strokeage3)
-
-#miage$year <- ifelse(miage$year==2011 & miage$agecat=="55-74", 2011.3, miage$year)
-#miage$year <- ifelse(miage$year==2011 & miage$agecat=="75+", 2011.6, miage$year)
-#miage$year <- ifelse(miage$year==2012 & miage$agecat=="55-74", 2012.3, miage$year)
-#miage$year <- ifelse(miage$year==2012 & miage$agecat=="75+", 2012.6, miage$year)
-#miage$year <- ifelse(miage$year==2013 & miage$agecat=="55-74", 2013.3, miage$year)
-#miage$year <- ifelse(miage$year==2013 & miage$agecat=="75+", 2013.6, miage$year)
-#miage$year <- ifelse(miage$year==2014 & miage$agecat=="55-74", 2014.3, miage$year)
-#miage$year <- ifelse(miage$year==2014 & miage$agecat=="75+", 2014.6, miage$year)
-#miage$year <- ifelse(miage$year==2015 & miage$agecat=="55-74", 2015.3, miage$year)
-#miage$year <- ifelse(miage$year==2015 & miage$agecat=="75+", 2015.6, miage$year)
-#miage$year <- ifelse(miage$year==2016 & miage$agecat=="55-74", 2016.3, miage$year)
-#miage$year <- ifelse(miage$year==2016 & miage$agecat=="75+", 2016.6, miage$year)
 
 strokeage$year <- ifelse(strokeage$year==2002 & strokeage$agecat=="55-74", 2002.3, strokeage$year)
 strokeage$year <- ifelse(strokeage$year==2002 & strokeage$agecat=="75+", 2002.6, strokeage$year)
@@ -269,40 +175,15 @@ strokeage$year <- ifelse(strokeage$year==2016 & strokeage$agecat=="75+", 2016.6,
 strokeage$year <- ifelse(strokeage$year==2017 & strokeage$agecat=="55-74", 2017.3, strokeage$year)
 strokeage$year <- ifelse(strokeage$year==2017 & strokeage$agecat=="75+", 2017.6, strokeage$year)
 
-#names(miage)[names(miage)=="agecat"]<-"age"
 names(strokeage)[names(strokeage)=="agecat"]<-"Age"
-
-#agemi <- ggplot(miage, aes(x=year, y=losmediaan, color=age))+
-#  geom_point(size=4)+
-#  #geom_point(aes(color=Disease), alpha=1, size=5)+
-#  #geom_text(label=losmistroke$Median, size=3, color="white")
-#  #geom_line()+
-#  scale_y_continuous(breaks = c(0,3,6,9,12,15,18,21), limits = c(0,21))+
-#  theme_bw()+
-#  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())+
-#  #scale_x_continuous(breaks=number_ticks(12))+
-#  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
-#  labs(x="Years", y="Median Length of Hospitalization [days (IQR)]")+
-#  geom_errorbar(miage, mapping = aes(ymin=losq1, ymax=losq3), size=2)+
-#  annotate("text",x=2011.3,y=0,label="2011")+
-#  annotate("text",x=2012.3,y=0,label="2012")+
-#  annotate("text",x=2013.3,y=0,label="2013")+
-#  annotate("text",x=2014.3,y=0,label="2014")+
-#  annotate("text",x=2015.3,y=0,label="2015")+
-#  annotate("text",x=2016.3,y=0,label="2016")+
-#  annotate("text",x=2011.5,y=21,label="MI")
 
 agestroke <- ggplot(strokeage, aes(x=year, y=losmediaan, color=Age))+
   scale_color_hue(labels = c("<55", "55-74 (p<0.001)", "75+ (p<0.001)"))+
   geom_point(size=4)+
-  #geom_point(aes(color=Disease), alpha=1, size=5)+
-  #geom_text(label=losmistroke$Median, size=3, color="white")
-  #geom_line()+
   scale_y_continuous(breaks = c(0,3,6,9,12,15,18), limits = c(0,18))+
   theme_bw()+
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), axis.title.y = element_blank(), axis.ticks.x = element_blank())+
-  #scale_x_continuous(breaks=number_ticks(12))+
-  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
+  scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
   labs(x="Years", y="Median Length of Hospitalization [days (IQR)]")+
   geom_errorbar(strokeage, mapping = aes(ymin=losq1, ymax=losq3), size=2)+
   annotate("text",x=2002.3,y=0,label="2002")+
@@ -322,36 +203,6 @@ agestroke <- ggplot(strokeage, aes(x=year, y=losmediaan, color=Age))+
   annotate("text",x=2016.3,y=0,label="2016")+
   annotate("text",x=2017.3,y=0,label="2017")
 plot(agestroke)
-#agelegend <- g_legend(agemi)
-
-#age <- grid.arrange(arrangeGrob(agemi+theme(legend.position = "none"),
-#                                agestroke+theme(legend.position = "none"),
-#                                nrow=1), agelegend,nrow=2,heights=c(5,1))
-
-###SUMMARY OF LOS BY REGIONS
-#miregion1 <- subset(mi, mi$regions=="Lima/Callao", select = c(year, los))
-#miregion1 <- miregion1%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                              losq1=quantile(los, c(.25)),
-#                                              losq3=quantile(los, c(.75)))
-#miregion2 <- subset(mi, mi$regions=="Resto Costa", select = c(year, los))
-#miregion2 <- miregion2%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                              losq1=quantile(los, c(.25)),
-#                                              losq3=quantile(los, c(.75)))
-#miregion3 <- subset(mi, mi$regions=="Selva", select = c(year, los))
-#miregion3 <- miregion3%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                              losq1=quantile(los, c(.25)),
-#                                              losq3=quantile(los, c(.75)))
-#miregion4 <- subset(mi, mi$regions=="Sierra", select = c(year, los))
-#miregion4 <- miregion4%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                              losq1=quantile(los, c(.25)),
-#                                              losq3=quantile(los, c(.75)))
-#miregion1$region <- 1
-#miregion2$region <- 2
-#miregion3$region <- 3
-#miregion4$region <- 4
-#miregion <- rbind(miregion1, miregion2, miregion3, miregion4)
-#miregion$region <- factor(miregion$region, levels = c(1,2,3,4), labels = c("Lima/Callao", "Rest Coast", "Amazon", "Highlands"))
-#rm(miregion1, miregion2, miregion3, miregion4)
 
 strokeregion1 <- subset(stroke, stroke$regions=="Lima/Callao", select = c(year, los))
 strokeregion1 <- strokeregion1%>%group_by(year)%>%dplyr::summarise(losmediaan=median(los,na.rm=TRUE), 
@@ -376,25 +227,6 @@ strokeregion4$region <- 4
 strokeregion <- rbind(strokeregion1, strokeregion2, strokeregion3, strokeregion4)
 strokeregion$region <- factor(strokeregion$region, levels = c(1,2,3,4), labels = c("Lima/Callao", "Rest Coast", "Amazon", "Highlands"))
 rm(strokeregion1, strokeregion2, strokeregion3, strokeregion4)
-
-#miregion$year <- ifelse(miregion$year==2011 & miregion$region=="Rest Coast", 2011.2, miregion$year)
-#miregion$year <- ifelse(miregion$year==2011 & miregion$region=="Highlands", 2011.4, miregion$year)
-#miregion$year <- ifelse(miregion$year==2011 & miregion$region=="Amazon", 2011.6, miregion$year)
-#miregion$year <- ifelse(miregion$year==2012 & miregion$region=="Rest Coast", 2012.2, miregion$year)
-#miregion$year <- ifelse(miregion$year==2012 & miregion$region=="Highlands", 2012.4, miregion$year)
-#miregion$year <- ifelse(miregion$year==2012 & miregion$region=="Amazon", 2012.6, miregion$year)
-#miregion$year <- ifelse(miregion$year==2013 & miregion$region=="Rest Coast", 2013.2, miregion$year)
-#miregion$year <- ifelse(miregion$year==2013 & miregion$region=="Highlands", 2013.4, miregion$year)
-#miregion$year <- ifelse(miregion$year==2013 & miregion$region=="Amazon", 2013.6, miregion$year)
-#miregion$year <- ifelse(miregion$year==2014 & miregion$region=="Rest Coast", 2014.2, miregion$year)
-#miregion$year <- ifelse(miregion$year==2014 & miregion$region=="Highlands", 2014.4, miregion$year)
-#miregion$year <- ifelse(miregion$year==2014 & miregion$region=="Amazon", 2014.6, miregion$year)
-#miregion$year <- ifelse(miregion$year==2015 & miregion$region=="Rest Coast", 2015.2, miregion$year)
-#miregion$year <- ifelse(miregion$year==2015 & miregion$region=="Highlands", 2015.4, miregion$year)
-#miregion$year <- ifelse(miregion$year==2015 & miregion$region=="Amazon", 2015.6, miregion$year)
-#miregion$year <- ifelse(miregion$year==2016 & miregion$region=="Rest Coast", 2016.2, miregion$year)
-#miregion$year <- ifelse(miregion$year==2016 & miregion$region=="Highlands", 2016.4, miregion$year)
-#miregion$year <- ifelse(miregion$year==2016 & miregion$region=="Amazon", 2016.6, miregion$year)
 
 strokeregion$year <- ifelse(strokeregion$year==2002 & strokeregion$region=="Rest Coast", 2002.2, strokeregion$year)
 strokeregion$year <- ifelse(strokeregion$year==2002 & strokeregion$region=="Highlands", 2002.4, strokeregion$year)
@@ -445,37 +277,13 @@ strokeregion$year <- ifelse(strokeregion$year==2017 & strokeregion$region=="Rest
 strokeregion$year <- ifelse(strokeregion$year==2017 & strokeregion$region=="Highlands", 2017.4, strokeregion$year)
 strokeregion$year <- ifelse(strokeregion$year==2017 & strokeregion$region=="Amazon", 2017.6, strokeregion$year)
 
-#regionmi <- ggplot(miregion, aes(x=year, y=losmediaan, color=region))+
-#  geom_point(size=4)+
-#  #geom_point(aes(color=Disease), alpha=1, size=5)+
-#  #geom_text(label=losmistroke$Median, size=3, color="white")
-#  #geom_line()+
-#  scale_y_continuous(breaks = c(0,3,6,9,12,15,18,21), limits = c(0,21))+
-#  theme_bw()+
-#  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())+
-#  #scale_x_continuous(breaks=number_ticks(12))+
-#  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
-#  labs(x="Years", y="Median Length of Hospitalization [days (IQR)]")+
-#  geom_errorbar(miregion, mapping = aes(ymin=losq1, ymax=losq3),size=2)+
-#  annotate("text",x=2011.3,y=0,label="2011")+
-#  annotate("text",x=2012.3,y=0,label="2012")+
-#  annotate("text",x=2013.3,y=0,label="2013")+
-#  annotate("text",x=2014.3,y=0,label="2014")+
-#  annotate("text",x=2015.3,y=0,label="2015")+
-#  annotate("text",x=2016.3,y=0,label="2016")+
-#  annotate("text",x=2011.5,y=21,label="MI")
 names(strokeregion)[names(strokeregion)=="region"]<-"Region"
 regionstroke <- ggplot(strokeregion, aes(x=year, y=losmediaan, color=Region))+
   scale_color_hue(labels = c("Lima/Callao","Rest Coast (p<0.001)", "Amazon (p<0.001)", "Highlands (p<0.001)"))+
   geom_point(size=4)+
-  #geom_point(aes(color=Disease), alpha=1, size=5)+
-  #geom_text(label=losmistroke$Median, size=3, color="white")
-  #geom_line()+
   scale_y_continuous(breaks = c(0,3,6,9,12,15,18,21), limits = c(0,21))+
   theme_bw()+
   theme(axis.text.x = element_blank(), axis.title.x =  element_blank(), axis.title.y = element_blank(), axis.ticks.x = element_blank())+
-  #scale_x_continuous(breaks=number_ticks(12))+
-  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
   labs(x="Years", y="Median Length of Hospitalization [days (IQR)]")+
   geom_errorbar(strokeregion, mapping = aes(ymin=losq1, ymax=losq3), size=2)+
   annotate("text",x=2002.3,y=0,label="2002")+
@@ -495,26 +303,6 @@ regionstroke <- ggplot(strokeregion, aes(x=year, y=losmediaan, color=Region))+
   annotate("text",x=2016.3,y=0,label="2016")+
   annotate("text",x=2017.3,y=0,label="2017")
 plot(regionstroke)
-#regionlegend <- g_legend(regionmi)
-
-#region <- grid.arrange(arrangeGrob(regionmi+theme(legend.position = "none"),
-#                                regionstroke+theme(legend.position = "none"),
-#                                nrow=1), regionlegend,nrow=2,heights=c(5,1))
-
-###SUMMARY OF LOS BY ICD10
-#micie1 <- subset(mi, mi$cid10=="I20", select = c(year, los))
-#micie1 <- micie1%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                                    losq1=quantile(los, c(.25)),
-#                                                    losq3=quantile(los, c(.75)))
-#micie2 <- subset(mi, mi$cid10=="I21", select = c(year, los))
-#micie2 <- micie2%>%group_by(year)%>%summarise(losmediaan=median(los,na.rm=TRUE), 
-#                                                    losq1=quantile(los, c(.25)),
-#                                                    losq3=quantile(los, c(.75)))
-#micie1$icd <- 1
-#micie2$icd <- 2
-#micie <- rbind(micie1, micie2)
-#micie$icd <- factor(micie$icd, levels = c(1,2), labels = c("I20", "I21"))
-#rm(micie1, micie2)
 
 strokecie1 <- subset(stroke, stroke$cid10=="I60", select = c(year, los))
 strokecie1 <- strokecie1%>%group_by(year)%>%dplyr::summarise(losmediaan=median(los,na.rm=TRUE), 
@@ -539,19 +327,6 @@ strokecie4$icd <- 4
 strokecie <- rbind(strokecie1, strokecie2, strokecie3, strokecie4)
 strokecie$icd <- factor(strokecie$icd, levels = c(1,2,3,4), labels = c("Subarachnoid Hemorrhage (I60)", "Intra-cerebral Hemorrhage (I61)", "Cerebral Infarction (I63)", "Stroke not specified (I64)"))
 rm(strokecie1, strokecie2, strokecie3, strokecie4)
-
-#micie$year <- ifelse(micie$year==2011 & micie$icd=="I20", 2011.3, micie$year)
-#micie$year <- ifelse(micie$year==2011 & micie$icd=="I21", 2011.6, micie$year)
-#micie$year <- ifelse(micie$year==2012 & micie$icd=="I20", 2012.3, micie$year)
-#micie$year <- ifelse(micie$year==2012 & micie$icd=="I21", 2012.6, micie$year)
-#micie$year <- ifelse(micie$year==2013 & micie$icd=="I20", 2013.3, micie$year)
-#micie$year <- ifelse(micie$year==2013 & micie$icd=="I21", 2013.6, micie$year)
-#micie$year <- ifelse(micie$year==2014 & micie$icd=="I20", 2014.3, micie$year)
-#micie$year <- ifelse(micie$year==2014 & micie$icd=="I21", 2014.6, micie$year)
-#micie$year <- ifelse(micie$year==2015 & micie$icd=="I20", 2015.3, micie$year)
-#micie$year <- ifelse(micie$year==2015 & micie$icd=="I21", 2015.6, micie$year)
-#micie$year <- ifelse(micie$year==2016 & micie$icd=="I20", 2016.3, micie$year)
-#micie$year <- ifelse(micie$year==2016 & micie$icd=="I21", 2016.6, micie$year)
 
 strokecie$year <- ifelse(strokecie$year==2002 & strokecie$icd=="Intra-cerebral Hemorrhage (I61)", 2002.2, strokecie$year)
 strokecie$year <- ifelse(strokecie$year==2002 & strokecie$icd=="Cerebral Infarction (I63)", 2002.4, strokecie$year)
@@ -602,40 +377,15 @@ strokecie$year <- ifelse(strokecie$year==2017 & strokecie$icd=="Intra-cerebral H
 strokecie$year <- ifelse(strokecie$year==2017 & strokecie$icd=="Cerebral Infarction (I63)", 2017.4, strokecie$year)
 strokecie$year <- ifelse(strokecie$year==2017 & strokecie$icd=="Stroke not specified (I64)", 2017.6, strokecie$year)
 
-#icdmi <- ggplot(micie, aes(x=year, y=losmediaan, color=icd))+
-#  geom_point(size=4)+
-#  #geom_point(aes(color=Disease), alpha=1, size=5)+
-#  #geom_text(label=losmistroke$Median, size=3, color="white")
-#  #geom_line()+
-#  scale_y_continuous(breaks = c(0,3,6,9,12,15,18,21), limits = c(0,21))+
-#  theme_bw()+
-#  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())+
-#  #scale_x_continuous(breaks=number_ticks(12))+
-#  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
-#  labs(x="Years", y="Median Length of Hospitalization [days (IQR)]")+
-#  geom_errorbar(micie, mapping = aes(ymin=losq1, ymax=losq3),size=2)+
-#  annotate("text",x=2011.3,y=0,label="2011")+
-#  annotate("text",x=2012.3,y=0,label="2012")+
-#  annotate("text",x=2013.3,y=0,label="2013")+
-#  annotate("text",x=2014.3,y=0,label="2014")+
-#  annotate("text",x=2015.3,y=0,label="2015")+
-#  annotate("text",x=2016.3,y=0,label="2016")+
-#  annotate("text",x=2011.5,y=21,label="MI")
-
 names(strokecie)[names(strokecie)=="icd"]<-"ICD10"
 
 icdstroke <- ggplot(strokecie, aes(x=year, y=losmediaan, color=ICD10))+
   scale_color_hue(labels = c("Subarachnoid Hemorrhage (I60)", "Intra-cerebral Hemorrhage (I61)", "Cerebral Infarction (I63, p<0.001)*", "Stroke not specified (I64, p<0.001)*"))+
   labs(color="ICD-10")+
   geom_point(size=4)+
-  #geom_point(aes(color=Disease), alpha=1, size=5)+
-  #geom_text(label=losmistroke$Median, size=3, color="white")
-  #geom_line()+
   scale_y_continuous(breaks = c(0,3,6,9,12,15,18,21,24), limits = c(0,24))+
   theme_bw()+
   theme(axis.text.x = element_blank(), axis.title.x  = element_blank(), axis.title.y = element_blank(), axis.ticks.x = element_blank())+
-  #scale_x_continuous(breaks=number_ticks(12))+
-  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
   labs(x="Years", y="Median Length of Hospitalization [days (IQR)]")+
   geom_errorbar(strokecie, mapping = aes(ymin=losq1, ymax=losq3),size=2)+
   annotate("text",x=2002.3,y=0,label="2002")+
@@ -656,10 +406,6 @@ icdstroke <- ggplot(strokecie, aes(x=year, y=losmediaan, color=ICD10))+
   annotate("text",x=2017.3,y=0,label="2017")
 
 plot(icdstroke)
-
-#icd <- grid.arrange(arrangeGrob(icdmi,
-#                                icdstroke,
-#                                nrow=1))
 
 ###ONlY CIE-10
 
@@ -747,14 +493,9 @@ icdstroke <- ggplot2::ggplot(strokecie, aes(x=year, y=losmediaan, color=icd))+
   labs(color="ICD-10")+
   scale_color_hue(labels = c("I60","I61","I63 (p<0.001)*", "I64 (p<0.001)*"))+
   geom_point(size=4)+
-  #geom_point(aes(color=Disease), alpha=1, size=5)+
-  #geom_text(label=losmistroke$Median, size=3, color="white")
-  #geom_line()+
   scale_y_continuous(breaks = c(0,3,6,9,12,15,18,21,24), limits = c(0,24))+
   theme_bw()+
   theme(axis.text.x = element_blank(), axis.title.x  = element_blank(), axis.title.y = element_blank(), axis.ticks.x = element_blank())+
-  #scale_x_continuous(breaks=number_ticks(12))+
-  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
   geom_errorbar(strokecie, mapping = aes(ymin=losq1, ymax=losq3),size=2)+
   annotate("text",x=2002.3,y=0,label="2002")+
   annotate("text",x=2003.3,y=0,label="2003")+
@@ -773,6 +514,7 @@ icdstroke <- ggplot2::ggplot(strokecie, aes(x=year, y=losmediaan, color=icd))+
   annotate("text",x=2016.3,y=0,label="2016")+
   annotate("text",x=2017.3,y=0,label="2017")
 plot(icdstroke)
+
 ###SUMMARY OF LOS BY HOSPITAL LEVEL
 strokelevel1 <- subset(stroke, stroke$level=="I, II", select = c(year, los))
 strokelevel1 <- strokelevel1%>%group_by(year)%>%dplyr::summarise(losmediaan=median(los,na.rm=TRUE), 
@@ -809,15 +551,9 @@ names(strokelevel)[names(strokelevel)=="level"]<-"Level"
 levelstroke <- ggplot(strokelevel, aes(x=year, y=losmediaan, color=Level))+
   scale_color_hue(labels = c("I,II (p<0.001)","III"))+
   geom_point(size=4)+
-  #geom_point(aes(color=Disease), alpha=1, size=5)+
-  #geom_text(label=losmistroke$Median, size=3, color="white")
-  #geom_line()+
   scale_y_continuous(breaks = c(0,3,6,9,12,15,18,21), limits = c(0,21))+
   theme_bw()+
   theme(axis.text.x = element_blank(), axis.title.x = element_blank(), axis.title.y = element_blank(), axis.ticks.x = element_blank())+
-  #scale_x_continuous(breaks=number_ticks(12))+
-  #scale_x_continuous(breaks = c(2011,2012,2013,2014,2015,2016))+
-  #labs(x="Years", y="Median Length of Hospitalization [days (IQR)]")+
   geom_errorbar(strokelevel, mapping = aes(ymin=losq1, ymax=losq3),size=2)+
   annotate("text",x=2002.1,y=0,label="2002")+
   annotate("text",x=2003.1,y=0,label="2003")+
@@ -836,6 +572,7 @@ levelstroke <- ggplot(strokelevel, aes(x=year, y=losmediaan, color=Level))+
   annotate("text",x=2016.1,y=0,label="2016")+
   annotate("text",x=2017.1,y=0,label="2017")
 plot(levelstroke)
+
 # Load libraries to use grid.arrange 
 
 library(gridExtra)
@@ -844,20 +581,12 @@ library(ggplot2)
 library(lattice)
 library(ggpubr)
 
-#grid.arrange(arrangeGrob(losall, agestroke,
-                        # sexstroke, icdstroke,top = textGrob("A","B","C","D"),
-                        # nrow=2),
-             #left = textGrob("Median Length of Hospitalization [days (IQR)]", rot = 90, vjust = 1))
-
 grid.arrange(ggarrange(losall, sexstroke,agestroke,icdstroke + rremove("x.text"), 
           labels = c("A", "B", "C","D"),
           ncol = 2, nrow = 2),left=textGrob("Median Length of Hospitalization [days (IQR)]", rot = 90, vjust = 1))
 
 ###SUPPLEMENTARY MATERIAL
 
-#grid.arrange(arrangeGrob(regionstroke, levelstroke,
-                         #nrow=1),
-             #left = textGrob("Median Length of Hospitalization [days (IQR)]", rot = 90, vjust = 1)) 
 grid.arrange(ggarrange(regionstroke, levelstroke + rremove("x.text"), 
                        labels = c("E", "F"),
                        ncol = 2, nrow = 1),left=textGrob("Median Length of Hospitalization [days (IQR)]", rot = 90, vjust = 1))
@@ -893,30 +622,34 @@ detach(y2016deaths)
 #strokeI64 <- stroke %>% filter(cid10=="I64")
 
 library(dplyr)
-stroke$cid10 <- ifelse(stroke$cid10=="I60" | stroke$cid10=="I61",0, ifelse(stroke$cid10=="I63",1,ifelse(stroke$cid10=="I64",2,NA)))
-stroke$cid10 <- factor(stroke$cid10,levels = c(0,1,2),labels = c("I60-I61","I63","I64"))
-dplyr::count(stroke)
-levels(as.factor(stroke$cid10))
 
-stroken_ve$cid10 <- ifelse(stroken_ve$cid10=="I60" | stroken_ve$cid10=="I61",0, ifelse(stroken_ve$cid10=="I63",1,ifelse(stroken_ve$cid10=="I64",2,NA)))
-stroken_ve$cid10 <- factor(stroken_ve$cid10,levels = c(0,1,2),labels = c("I60-I61","I63","I64"))
+stroke$cid102 <- ifelse(stroke$cid10=="I60" | stroke$cid10=="I61",0, ifelse(stroke$cid10=="I63",1,ifelse(stroke$cid10=="I64",2,NA))) %>% 
+  factor(levels = c(0,1,2),labels = c("I60-I61","I63","I64"))
+str(stroke$cid102)
+levels(as.factor(stroke$cid102))
+stroke$los <- as.numeric(stroke$los)
+
+stroke$cid102
+kruskal.test(los~cid102, data = stroke)
+
+str(stroken_ve)
+
 levels(as.factor(stroken_ve$cid10))
-
 5307 +  5810 + 10700
+
 #normalidad
 #library(nortest)
 #ad.test(strokeI601$los) # p<0.05
 #ad.test(strokeI63$los) # p<0.05
 #ad.test(strokeI64$los) # p<0.05
 
-#http://www.biostathandbook.com/linearregression.html
 #test Kruskal–Wallis test
 
 kruskal.test(los ~ cid10,
              data = stroke)
 
-#p-value < 2.2e-16
 ###DUNT TEST FOR MULTPLE COMPARATIONS  
+
 #CIE10~los
 library(dunn.test)
 attach(stroke)
@@ -952,15 +685,18 @@ wilcox.test(los ~ level, data = stroke, exact = FALSE)
 #p.adjust(2.2e-16, n=3)
 #pairwise.t.test(los, cid10, p.adjust = "bonferroni")
 
-############################
-#####MORTALITY ANALYSIS#####
-############################
+##MORTALITY ANALYSIS
+##Case fatality rate ~ CI
 
-###Case fatality rate ~ CI
-#===========================
-installed.packages("epitools")
 library(epitools)
 pois.approx(757, pt = 6566, conf.level = 0.95)
+pois.approx(331, pt = 3305, conf.level = 0.95) #men
+pois.approx(426, pt = 3261, conf.level = 0.95) #women
+
+
+table(y2016deaths$sexo, y2016deaths$condicion)
+table(y2016deaths$sexo)
+
 #757 6566 0.1152909 0.107078 0.1235038       0.95
 
 #CDR~sex
@@ -1006,7 +742,7 @@ tapply(y2016deaths$los, y2016deaths$condicion, summary)
 kruskal.test(los ~ condicion, data = y2016deaths) 
 
 
-###SURVIVAL ANALYSIS
+##SURVIVAL ANALYSIS
 
 ##GENERATE SURVIVAL OBJECT
 y2016deaths$survivalobj0 <- with(y2016deaths,Surv(los,condicion=="Death"))
@@ -1041,172 +777,18 @@ names(y2016deaths)[names(y2016deaths) == "cid10"] <- 'ICD-10'
 losfit <- survfit(Surv(y2016deaths$los, y2016deaths$condicion=="Death") ~ y2016deaths$'ICD-10',
                   data = y2016deaths)
 
+palette()               # obtain the current palette
+
+(palette(gray(seq(0,.9,len = 25)))) # gray scales; print old palette
+matplot(outer(1:100, 1:30), type = "l", lty = 1,lwd = 2, col = 1:30,
+        main = "Gray Scales Palette",
+        sub = "palette(gray(seq(0, .9, len=25)))")
+palette("default")      # reset back to the default
+
 # Visualize with survminer
 ggsurvplot(losfit, data = y2016deaths, main = "Survival curve",
            submain = "Based on Kaplan-Meier estimates", legend = c(0.1, 0.2),
            legend.title = "Strata",  risk.table = TRUE, xlim = c(0,30),
-           break.time.by = 5, risk.table.y.text.col = T, risk.table.y.text = FALSE)
-attach(stroke)
-tapply(stroke$los,stroke$region,summary)
-tapply(y2016deaths$condicion,y2016deaths$agecat,summary)
-
-#Create trend
-#modelo lineal?
-describetrend <- stroke %>% ggplot(aes(year, los, group = sexo)) +
-  geom_line(alpha = 1/3)
-describetrend
-
-
-men <- filter(stroke, sexo == "Men")
-men %>% 
-  ggplot(aes(factor(year), los)) + 
-  geom_line() + 
-  ggtitle("Full data = ")
-
-nz_mod <- lm(lifeExp ~ year, data = nz)
-nz %>% 
-  add_predictions(nz_mod) %>%
-  ggplot(aes(year, pred)) + 
-  geom_line() + 
-  ggtitle("Linear trend + ")
-
-nz %>% 
-  add_residuals(nz_mod) %>% 
-  ggplot(aes(year, resid)) + 
-  geom_hline(yintercept = 0, colour = "white", size = 3) + 
-  geom_line() + 
-  ggtitle("Remaining pattern")
-
-#LINEAL REGRESS ~ TRENDS
-library(moderndive)
-library(infer)
-library(tidyverse)
-library(broom)
-library(modelr)
-library(sandwich)
-library(dagitty)
-
-# Observed effect δ∗ b1
-#slope_obs <- lm %>% 
-#  specify(n ~ sexo) %>% 
-#  calculate(stat = "slope",order = c("Women", "Men")) #women control
-#slope_obs
-
-#help("specify")
-
-#Distribution of δ under  H0
-#null_slope_distn <- lm %>% 
-#  specify(n~ sexo) %>%
-#  hypothesize(null = "independence") %>% 
-#  generate(reps = 10000) %>% 
-#  calculate(stat = "slope",order = c("Women", "Men"))
-
-#null_slope_distn %>% 
-# visualize(obs_stat = slope_obs, direction = "greater")
-
-#p-value
-#null_slope_distn %>% 
-#  get_pvalue(obs_stat = slope_obs, direction = "greater") #0.449
-
-lm2 <- stroke %>% group_by(year) %>% count()
-names(lm2)[names(lm2)=="n"]<-"N"
-lm <- stroke %>% 
-  group_by(year) %>%
-  select(year,sexo) %>% count(sexo)
-lm <- left_join(lm, lm2, by = "year")
-lm <- lm %>% spread(sexo,n)
-View(lm)
-
-lm$Men <- as.numeric(lm$Men)
-lm$Women <- as.numeric(lm$Women)
-lm$N <- as.numeric(lm$N)
-lm$year <- as.numeric(lm$year)
-###negative binomial
-#var>mean
-var(lm$Men) > mean(lm$Men) #overdispertion
-summary(m1 <- glm.nb(daysabs ~ math + prog, data = dat))
-#Model 1: Quasi-poisson 
-
-year_sex_lm <- lm(Men~year+Women+N,data=lm)
-year_sex_lm <- glm(n ~ men+women,family="poisson",data=lm)
-summary(year_sex_lm)
-get_regression_table(year_sex_lm)
-
-tidy(year_sex_lm)
-summary(year_sex_lm)
-plot(year_sex_lm)
-sandwich(year_sex_lm)
-test.
-summary.glm(lm,dispersion=n)
-var(lm$n)
-mean(lm$n)
-
-####plot#####
-ggplot(lmedian.income ,burglaries) 
-curve(exp(coef(standard.fit )[1] +
-            coef(standard.fit )[2]*x),add =TRUE , col="blue")
-
-#############
-
-
-coeff <- glm(n ~ year + sexo, family="poisson",data = lm) %>% coef() %>% as.numeric()
-coeff
-slopes <- lm %>%
-  group_by(sexo) %>%
-  summarise(min = min(year), max = max(year)) %>%
-  mutate(intercept = coeff[1]) %>%
-  mutate(intercept = ifelse(sexo == "Men", intercept + coeff[3], intercept)) %>%
-  gather(point, year, -c(sexo, intercept)) %>%
-  mutate(y_hat = intercept + year * coeff[2])
-slopes
-
-ggplot(lm, aes(x = year, y = n, col = sexo)) +
-  geom_jitter() +
-  labs(x = "Year", y = "Stroke cases", color = "Sex") +
-  geom_line(data = slopes, aes(y = y_hat), size = 1)#+
-
-
-#Model 2: Includes an interaction term
-year_sex_model <- lm(n ~ year*sexo,data=lm)
-
-ggplot(lm, aes(x = year, y = n, col = sexo)) +
-  geom_jitter() +
-  labs(x = "Year", y = "Stroke cases", color = "Sex") +
-  geom_smooth(method = "lm", se = FALSE)
-
-get_regression_table(year_sex_lm)
-get_regression_table(year_sex_model)
-
-#Table no interaction
-n_model_2 <- lm(n ~ year + sexo, data = lm)
-get_regression_table(n_model_2) %>% 
-  knitr::kable(
-    digits = 3,
-    caption = "Model 1: Regression table with no interaction effect included", 
-    booktabs = TRUE
-  )
-coef(year_sex_lm)
-summary(year_sex_lm)
-
-#Table interaction
-n_model_1 <- lm(n ~ year * sexo, data = lm)
-get_regression_table(n_model_1) %>% 
-  knitr::kable(
-    digits = 3,
-    caption = "Model 2: Regression table with interaction effect included", 
-    booktabs = TRUE)
-
-mean(lm$n)
-var(lm$n)
-
-#DAG
-
-#trends comparation
-library(trend)
-
-
-
-
-
-
-
+           break.time.by = 5, risk.table.y.text.col = T, risk.table.y.text = FALSE, conf.int = TRUE,conf.int.style=c("ribbon"), pval = TRUE, palette = gray(0:4/4))
+  
+     

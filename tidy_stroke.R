@@ -13,7 +13,7 @@ library(gtools)
 library(Hmisc)
 library(magrittr)
 
-setwd("/home/init5/R/Stroke/")
+setwd("~/Documentos/R/Stroke/")
 
 # Load excel by sheets and # transform variable names (all to lowercase) 
 
@@ -22,6 +22,7 @@ stroke <- read.csv("actual data/Stroke Egresos MINSA 2002-2017.csv") %>%
 
 table(stroke$condicion,stroke$anio)
 table(y2016deaths$anio==2017,y2016deaths$cid10)
+
 ###MAKE A NEW DATASET FOR Y2016 WITH DEATH CASES
 #------------------------------------------------
 y2016deaths <- stroke %>% filter(anio %in% c("2016","2017")) %>% mutate(cid10=substr(cod_enf,1,3)) %>% 
@@ -137,8 +138,6 @@ plot(losallnonp)
 strokenonphysic %>% glimpse()
 table(strokenonphysic$condicion==4,strokenonphysic$anio)
 52563-29354 
-#----------------------------------------------------------------
-
 
 #==========================================
 ###KEEP SUBJECTS WITH AGE MEASURED IN YEARS
