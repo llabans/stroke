@@ -17,13 +17,13 @@ setwd("~/Documentos/R/Stroke/")
 
 # Load excel by sheets and # transform variable names (all to lowercase) 
 
-stroke <- read.csv("actual data/Stroke Egresos MINSA 2002-2017.csv") %>% 
+stroke <- read.csv("datastroke_2002-2017.csv") %>% 
   rename_all(funs(stringr::str_to_lower(.))) %>% mutate_if(is.factor, as.character) 
 
 table(stroke$condicion,stroke$anio)
 table(y2016deaths$anio==2017,y2016deaths$cid10)
 
-###MAKE A NEW DATASET FOR Y2016 WITH DEATH CASES
+###MAKE A NEW DATASET FOR Y2016-2017 WITH DEATH CASES
 #------------------------------------------------
 y2016deaths <- stroke %>% filter(anio %in% c("2016","2017")) %>% mutate(cid10=substr(cod_enf,1,3)) %>% 
                filter(cid10 %in% c("I60","I61","I63","I64") & condicion %in% c("1","5") & t_edad==1 & edad>=35) %>% 
