@@ -65,9 +65,8 @@ prop.res.cox2 #VIOLATION OF THE ASSUMPTION
 library(eha)
 
 #Model not adjusted
-wb1 <- weibreg(survivalobj0 ~ exposure+strata(regions, level):cid10,
+wb1 <- weibreg(survivalobj0 ~ exposure+strata(regions, level),
                data = y2016deaths) #strata
-wb1
 #I60
 #exp(0.850 + 1.96*0.125)
 #exp(0.850 -1.96*0.125)
@@ -83,20 +82,15 @@ wb1
 #Adjusted model
 ehawb2 <- weibreg(survivalobj0 ~ exposure+sexo+edad+strata(regions,level),
                   data = y2016deaths) #ajusted~strata
-ehawb2
-
 #I60
-exp(0.895 + 1.96*0.127)
-exp(0.895 -1.96*0.127)
-
+#exp(0.895 + 1.96*0.127)
+#exp(0.895 -1.96*0.127)
 #I61
-exp(0.670 +1.96*0.117)
-exp(0.670 -1.96*0.117)
-
+#exp(0.670 +1.96*0.117)
+#exp(0.670 -1.96*0.117)
 #I64
-exp(0.374 +1.96*0.113)
-exp(0.374 -1.96*0.113)
-
+#exp(0.374 +1.96*0.113)
+#exp(0.374 -1.96*0.113)
 
 #################################################################################
 #Creating survival plot
@@ -111,14 +105,6 @@ y2016deaths$cid10 <- factor(y2016deaths$cid10, levels = c("I60","I61","I63","I64
 names(y2016deaths)[names(y2016deaths) == "cid10"] <- 'ICD-10'
 losfit <- survfit(Surv(y2016deaths$los, y2016deaths$condicion=="Death") ~ y2016deaths$'ICD-10',
                   data = y2016deaths)
-
-palette()               # obtain the current palette
-
-#(palette(gray(seq(0,.9,len = 25)))) # gray scales; print old palette
-#matplot(outer(1:100, 1:30), type = "l", lty = 1,lwd = 2, col = 1:30,
-#        main = "Gray Scales Palette",
-#        sub = "palette(gray(seq(0, .9, len=25)))")
-#palette("default")      # reset back to the default
 
 # Visualize with survminer
 ggsurvplot(losfit, data = y2016deaths, main = "Survival curve", pval = TRUE, size = 0.5, pval.coord =c(2,0),
