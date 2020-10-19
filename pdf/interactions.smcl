@@ -1,0 +1,907 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\users\init5\Mis Documentos\stata\interactions.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}18 Oct 2020, 17:47:15
+
+{com}. do "Z:\home\init5\Documentos\stata\interactions.do"
+{txt}
+{com}. *local dir `c(pwd)'
+. //ON
+. *cd "`c(pwd)'"
+. *cd "D:\42-tiempoevento"
+. 
+. **** Base de datos: Cáncer y muerte ****
+. use "Z:\home\init5\Documentos\stata\bioestadistica\deaths.dta", clear
+{txt}(Written by R.              )
+
+{com}. 
+. codebook
+
+{txt}{hline}
+{res}sexo{right:sexo}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:sexo}
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}0{txt}/{res}6,566
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}     3,305{col 33}       1{col 43}{txt}Men
+{col 21}{res}     3,261{col 33}       2{col 43}{txt}Women
+
+{txt}{hline}
+{res}edad{right:edad}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}35{txt},{res}108{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}69{col 51}{txt}missing .:  {res}0{txt}/{res}6,566
+
+{txt}{col 19}mean:{res}{col 26} 68.5618
+{txt}{col 15}std. dev:{res}{col 26}  13.895
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}      49{col 37}      59{col 47}      70{col 57}      79{col 67}      86
+
+{txt}{hline}
+{res}cid10{right:cid10}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt})
+
+{col 10}unique values:  {res}4{col 51}{txt}missing "":  {res}0{txt}/{res}6,566
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       674{col 33}"I60"
+{col 21}     1,291{col 33}"I61"
+{col 21}     1,765{col 33}"I63"
+{col 21}     2,836{col 33}"I64"
+
+{txt}{hline}
+{res}agecat{right:agecat}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:agecat}
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}0{txt}/{res}6,566
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}     1,176{col 33}       1{col 43}{txt}<55
+{col 21}{res}     2,911{col 33}       2{col 43}{txt}55-74
+{col 21}{res}     2,479{col 33}       3{col 43}{txt}75+
+
+{txt}{hline}
+{res}level{right:level}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:level}
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}1{txt}/{res}6,566
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}     2,885{col 33}       1{col 43}{txt}I, II
+{col 21}{res}     3,680{col 33}       2{col 43}{txt}III
+{col 21}{res}         1{col 33}       .{col 43}
+
+{txt}{hline}
+{res}regions{right:regions}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:regions}
+
+{col 18}range:  [{res}1{txt},{res}4{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}0{txt}/{res}6,566
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}     3,080{col 33}       1{col 43}{txt}Lima/Callao
+{col 21}{res}     1,795{col 33}       2{col 43}{txt}Resto Costa
+{col 21}{res}     1,110{col 33}       3{col 43}{txt}Sierra
+{col 21}{res}       581{col 33}       4{col 43}{txt}Selva
+
+{txt}{hline}
+{res}condicion{right:condicion}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:condicion}
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}0{txt}/{res}6,566
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}     5,809{col 33}       1{col 43}{txt}Discharged
+{col 21}{res}       757{col 33}       2{col 43}{txt}Death
+
+{txt}{hline}
+{res}los{right:los}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1{txt},{res}59{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}59{col 51}{txt}missing .:  {res}0{txt}/{res}6,566
+
+{txt}{col 19}mean:{res}{col 26} 9.43558
+{txt}{col 15}std. dev:{res}{col 26} 8.52819
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}       2{col 37}       4{col 47}       7{col 57}      12{col 67}      19
+
+{txt}{hline}
+{res}anio{right:anio}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+
+{col 18}range:  [{res}2016{txt},{res}2017{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}0{txt}/{res}6,566
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}     3,053{col 33}2016
+{col 21}     3,513{col 33}2017
+
+{txt}{hline}
+{res}exposure{right:exposure}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:exposure}
+
+{col 18}range:  [{res}1{txt},{res}4{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}0{txt}/{res}6,566
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}     1,765{col 33}       1{col 43}{txt}I63
+{col 21}{res}       674{col 33}       2{col 43}{txt}I60
+{col 21}{res}     1,291{col 33}       3{col 43}{txt}I61
+{col 21}{res}     2,836{col 33}       4{col 43}{txt}I64
+
+{txt}{hline}
+{res}survivalobj0{right:survivalobj0}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1{txt},{res}59{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}59{col 51}{txt}missing .:  {res}0{txt}/{res}6,566
+
+{txt}{col 19}mean:{res}{col 26} 9.43558
+{txt}{col 15}std. dev:{res}{col 26} 8.52819
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}       2{col 37}       4{col 47}       7{col 57}      12{col 67}      19
+{txt}
+{com}. 
+. sum los, d
+
+                             {txt}los
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        1              1
+{txt} 5%    {res}        1              1
+{txt}10%    {res}        2              1       {txt}Obs         {res}      6,566
+{txt}25%    {res}        4              1       {txt}Sum of Wgt. {res}      6,566
+
+{txt}50%    {res}        7                      {txt}Mean          {res} 9.435577
+                        {txt}Largest       Std. Dev.     {res} 8.528187
+{txt}75%    {res}       12             58
+{txt}90%    {res}       19             59       {txt}Variance      {res} 72.72997
+{txt}95%    {res}       26             59       {txt}Skewness      {res} 2.243973
+{txt}99%    {res}       44             59       {txt}Kurtosis      {res} 9.611837
+{txt}
+{com}. 
+. *label define condicion 0 "Discharged" 1 "Death", replace
+. ******************** KAPLAN MEIER ******************** 
+. *modificar base a SURVIVAL TIME
+. *SETEAR A SOBREVIDA
+. stset los, failure(condicion==2)
+
+     {txt}failure event:  {res}condicion == 2
+{txt}obs. time interval:  {res}(0, los]
+{txt} exit on or before:  {res}failure
+
+{txt}{hline 78}
+{res}      6,566{txt}  total observations
+{res}          0{txt}  exclusions
+{hline 78}
+{res}      6,566{txt}  observations remaining, representing
+{res}        757{txt}  failures in single-record/single-failure data
+{res}     61,954{txt}  total analysis time at risk and under observation
+                                                at risk from t = {res}        0
+                                     {txt}earliest observed entry t = {res}        0
+                                          {txt}last observed exit t = {res}       59
+{txt}
+{com}. 
+. *listar todos los eventos en tiempo y funcion SOBREVIDA por cada punto en el tiempo
+. *en el que ocurre evento de interes
+. sts list, survival
+
+         {txt}failure _d:  {res}condicion == 2
+   {txt}analysis time _t:  {res}los
+
+           {txt}Beg.          Net            Survivor      Std.
+  Time    Total   Fail   Lost           Function     Error     [95% Conf. Int.]
+{hline 79}
+     1 {res}    6566    102    243             0.9845    0.0015     0.9812    0.9872
+{txt}     2 {res}    6221    103    376             0.9682    0.0022     0.9636    0.9722
+{txt}     3 {res}    5742     96    484             0.9520    0.0027     0.9464    0.9570
+{txt}     4 {res}    5162     73    555             0.9385    0.0031     0.9322    0.9443
+{txt}     5 {res}    4534     63    514             0.9255    0.0035     0.9184    0.9320
+{txt}     6 {res}    3957     48    450             0.9142    0.0038     0.9065    0.9214
+{txt}     7 {res}    3459     42    446             0.9031    0.0041     0.8948    0.9109
+{txt}     8 {res}    2971     29    335             0.8943    0.0044     0.8854    0.9026
+{txt}     9 {res}    2607     21    284             0.8871    0.0046     0.8777    0.8958
+{txt}    10 {res}    2302     20    253             0.8794    0.0049     0.8695    0.8886
+{txt}    11 {res}    2029     16    240             0.8725    0.0051     0.8620    0.8822
+{txt}    12 {res}    1773     21    190             0.8622    0.0056     0.8509    0.8727
+{txt}    13 {res}    1562     19    163             0.8517    0.0060     0.8395    0.8630
+{txt}    14 {res}    1380     14    159             0.8430    0.0064     0.8301    0.8550
+{txt}    15 {res}    1207      7    124             0.8381    0.0066     0.8248    0.8506
+{txt}    16 {res}    1076      4    121             0.8350    0.0067     0.8213    0.8478
+{txt}    17 {res}     951      7    116             0.8289    0.0071     0.8145    0.8423
+{txt}    18 {res}     828      8     94             0.8209    0.0076     0.8055    0.8351
+{txt}    19 {res}     726     10     67             0.8096    0.0083     0.7928    0.8251
+{txt}    20 {res}     649      2     68             0.8071    0.0084     0.7899    0.8230
+{txt}    21 {res}     579      2     48             0.8043    0.0086     0.7867    0.8205
+{txt}    22 {res}     529      5     53             0.7967    0.0092     0.7780    0.8140
+{txt}    23 {res}     471      5     43             0.7882    0.0098     0.7682    0.8067
+{txt}    24 {res}     423      4     40             0.7808    0.0104     0.7595    0.8004
+{txt}    25 {res}     379      4     34             0.7725    0.0111     0.7499    0.7934
+{txt}    26 {res}     341      1     18             0.7703    0.0113     0.7472    0.7915
+{txt}    27 {res}     322      2     23             0.7655    0.0117     0.7416    0.7875
+{txt}    28 {res}     297      2     26             0.7603    0.0122     0.7354    0.7832
+{txt}    29 {res}     269      1     18             0.7575    0.0125     0.7320    0.7809
+{txt}    30 {res}     250      2     23             0.7514    0.0131     0.7247    0.7760
+{txt}    31 {res}     225      2     15             0.7448    0.0138     0.7165    0.7706
+{txt}    32 {res}     208      3     10             0.7340    0.0149     0.7034    0.7620
+{txt}    33 {res}     195      0     14             0.7340    0.0149     0.7034    0.7620
+{txt}    34 {res}     181      0     15             0.7340    0.0149     0.7034    0.7620
+{txt}    35 {res}     166      3     15             0.7207    0.0165     0.6869    0.7516
+{txt}    36 {res}     148      0     10             0.7207    0.0165     0.6869    0.7516
+{txt}    37 {res}     138      1      8             0.7155    0.0172     0.6802    0.7477
+{txt}    38 {res}     129      3     10             0.6989    0.0193     0.6592    0.7349
+{txt}    39 {res}     116      2     13             0.6868    0.0208     0.6442    0.7255
+{txt}    40 {res}     101      1      6             0.6800    0.0216     0.6355    0.7203
+{txt}    41 {res}      94      1      9             0.6728    0.0226     0.6263    0.7148
+{txt}    42 {res}      84      3      5             0.6488    0.0257     0.5959    0.6965
+{txt}    43 {res}      76      0      3             0.6488    0.0257     0.5959    0.6965
+{txt}    44 {res}      73      0     10             0.6488    0.0257     0.5959    0.6965
+{txt}    45 {res}      63      0     11             0.6488    0.0257     0.5959    0.6965
+{txt}    46 {res}      52      0      3             0.6488    0.0257     0.5959    0.6965
+{txt}    47 {res}      49      0      2             0.6488    0.0257     0.5959    0.6965
+{txt}    48 {res}      47      0      2             0.6488    0.0257     0.5959    0.6965
+{txt}    49 {res}      45      0      1             0.6488    0.0257     0.5959    0.6965
+{txt}    50 {res}      44      1      4             0.6340    0.0290     0.5742    0.6878
+{txt}    51 {res}      39      2      7             0.6015    0.0355     0.5283    0.6671
+{txt}    52 {res}      30      1      3             0.5815    0.0396     0.4999    0.6544
+{txt}    53 {res}      26      1      8             0.5591    0.0439     0.4687    0.6401
+{txt}    54 {res}      17      0      2             0.5591    0.0439     0.4687    0.6401
+{txt}    55 {res}      15      0      3             0.5591    0.0439     0.4687    0.6401
+{txt}    56 {res}      12      0      2             0.5591    0.0439     0.4687    0.6401
+{txt}    57 {res}      10      0      4             0.5591    0.0439     0.4687    0.6401
+{txt}    58 {res}       6      0      3             0.5591    0.0439     0.4687    0.6401
+{txt}    59 {res}       3      0      3             0.5591    0.0439     0.4687    0.6401
+{txt}{hline 79}
+
+{com}. sts list, failure
+
+         {txt}failure _d:  {res}condicion == 2
+   {txt}analysis time _t:  {res}los
+
+           {txt}Beg.          Net            Failure       Std.
+  Time    Total   Fail   Lost           Function     Error     [95% Conf. Int.]
+{hline 79}
+     1 {res}    6566    102    243             0.0155    0.0015     0.0128    0.0188
+{txt}     2 {res}    6221    103    376             0.0318    0.0022     0.0278    0.0364
+{txt}     3 {res}    5742     96    484             0.0480    0.0027     0.0430    0.0536
+{txt}     4 {res}    5162     73    555             0.0615    0.0031     0.0557    0.0678
+{txt}     5 {res}    4534     63    514             0.0745    0.0035     0.0680    0.0816
+{txt}     6 {res}    3957     48    450             0.0858    0.0038     0.0786    0.0935
+{txt}     7 {res}    3459     42    446             0.0969    0.0041     0.0891    0.1052
+{txt}     8 {res}    2971     29    335             0.1057    0.0044     0.0974    0.1146
+{txt}     9 {res}    2607     21    284             0.1129    0.0046     0.1042    0.1223
+{txt}    10 {res}    2302     20    253             0.1206    0.0049     0.1114    0.1305
+{txt}    11 {res}    2029     16    240             0.1275    0.0051     0.1178    0.1380
+{txt}    12 {res}    1773     21    190             0.1378    0.0056     0.1273    0.1491
+{txt}    13 {res}    1562     19    163             0.1483    0.0060     0.1370    0.1605
+{txt}    14 {res}    1380     14    159             0.1570    0.0064     0.1450    0.1699
+{txt}    15 {res}    1207      7    124             0.1619    0.0066     0.1494    0.1752
+{txt}    16 {res}    1076      4    121             0.1650    0.0067     0.1522    0.1787
+{txt}    17 {res}     951      7    116             0.1711    0.0071     0.1577    0.1855
+{txt}    18 {res}     828      8     94             0.1791    0.0076     0.1649    0.1945
+{txt}    19 {res}     726     10     67             0.1904    0.0083     0.1749    0.2072
+{txt}    20 {res}     649      2     68             0.1929    0.0084     0.1770    0.2101
+{txt}    21 {res}     579      2     48             0.1957    0.0086     0.1795    0.2133
+{txt}    22 {res}     529      5     53             0.2033    0.0092     0.1860    0.2220
+{txt}    23 {res}     471      5     43             0.2118    0.0098     0.1933    0.2318
+{txt}    24 {res}     423      4     40             0.2192    0.0104     0.1996    0.2405
+{txt}    25 {res}     379      4     34             0.2275    0.0111     0.2066    0.2501
+{txt}    26 {res}     341      1     18             0.2297    0.0113     0.2085    0.2528
+{txt}    27 {res}     322      2     23             0.2345    0.0117     0.2125    0.2584
+{txt}    28 {res}     297      2     26             0.2397    0.0122     0.2168    0.2646
+{txt}    29 {res}     269      1     18             0.2425    0.0125     0.2191    0.2680
+{txt}    30 {res}     250      2     23             0.2486    0.0131     0.2240    0.2753
+{txt}    31 {res}     225      2     15             0.2552    0.0138     0.2294    0.2835
+{txt}    32 {res}     208      3     10             0.2660    0.0149     0.2380    0.2966
+{txt}    33 {res}     195      0     14             0.2660    0.0149     0.2380    0.2966
+{txt}    34 {res}     181      0     15             0.2660    0.0149     0.2380    0.2966
+{txt}    35 {res}     166      3     15             0.2793    0.0165     0.2484    0.3131
+{txt}    36 {res}     148      0     10             0.2793    0.0165     0.2484    0.3131
+{txt}    37 {res}     138      1      8             0.2845    0.0172     0.2523    0.3198
+{txt}    38 {res}     129      3     10             0.3011    0.0193     0.2651    0.3408
+{txt}    39 {res}     116      2     13             0.3132    0.0208     0.2745    0.3558
+{txt}    40 {res}     101      1      6             0.3200    0.0216     0.2797    0.3645
+{txt}    41 {res}      94      1      9             0.3272    0.0226     0.2852    0.3737
+{txt}    42 {res}      84      3      5             0.3512    0.0257     0.3035    0.4041
+{txt}    43 {res}      76      0      3             0.3512    0.0257     0.3035    0.4041
+{txt}    44 {res}      73      0     10             0.3512    0.0257     0.3035    0.4041
+{txt}    45 {res}      63      0     11             0.3512    0.0257     0.3035    0.4041
+{txt}    46 {res}      52      0      3             0.3512    0.0257     0.3035    0.4041
+{txt}    47 {res}      49      0      2             0.3512    0.0257     0.3035    0.4041
+{txt}    48 {res}      47      0      2             0.3512    0.0257     0.3035    0.4041
+{txt}    49 {res}      45      0      1             0.3512    0.0257     0.3035    0.4041
+{txt}    50 {res}      44      1      4             0.3660    0.0290     0.3122    0.4258
+{txt}    51 {res}      39      2      7             0.3985    0.0355     0.3329    0.4717
+{txt}    52 {res}      30      1      3             0.4185    0.0396     0.3456    0.5001
+{txt}    53 {res}      26      1      8             0.4409    0.0439     0.3599    0.5313
+{txt}    54 {res}      17      0      2             0.4409    0.0439     0.3599    0.5313
+{txt}    55 {res}      15      0      3             0.4409    0.0439     0.3599    0.5313
+{txt}    56 {res}      12      0      2             0.4409    0.0439     0.3599    0.5313
+{txt}    57 {res}      10      0      4             0.4409    0.0439     0.3599    0.5313
+{txt}    58 {res}       6      0      3             0.4409    0.0439     0.3599    0.5313
+{txt}    59 {res}       3      0      3             0.4409    0.0439     0.3599    0.5313
+{txt}{hline 79}
+
+{com}. 
+. ***************************************************
+. **************** WEIBULL MODEL ********************
+. **********A: xLEVEL**********
+. *AM: 
+. *Y=B0 + B1.Level + B2.Exposure + B3.confusores
+. streg level i.exposure edad sexo, strata(level) d(weibull)
+
+         {txt}failure _d:  {res}condicion == 2
+   {txt}analysis time _t:  {res}los
+{txt}note: 2.level omitted because of collinearity
+
+Fitting constant-only model:
+{res}
+{txt}{res}{txt}Iteration 0:{space 3}log likelihood = {res:-2929.1917}  
+Iteration 1:{space 3}log likelihood = {res:-2919.8551}  
+Iteration 2:{space 3}log likelihood = {res:-2880.9267}  
+Iteration 3:{space 3}log likelihood = {res:-2880.2076}  
+Iteration 4:{space 3}log likelihood = {res:-2880.2059}  
+Iteration 5:{space 3}log likelihood = {res:-2880.2059}  
+{res}
+{txt}Fitting full model:
+{res}
+{txt}Iteration 0:{space 3}log likelihood = {res:-2880.2059}  
+Iteration 1:{space 3}log likelihood = {res:-2829.8715}  
+Iteration 2:{space 3}log likelihood = {res:-2826.6585}  
+Iteration 3:{space 3}log likelihood = {res:-2826.6474}  
+Iteration 4:{space 3}log likelihood = {res:-2826.6474}  
+{res}
+{txt}Weibull PH regression
+
+No. of subjects = {res}       6,565                  {txt}Number of obs    =  {res}     6,565
+{txt}No. of failures = {res}         757
+{txt}Time at risk    = {res}       61951
+                                                {txt}LR chi2({res}6{txt})       =  {res}    107.12
+{txt}Log likelihood  =   {res}-2826.6474                  {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}_t           {txt}{c |}
+{space 7}level {c |}{col 14}{res}{space 2}-.5810809{col 26}{space 2} .1680366{col 37}{space 1}   -3.46{col 46}{space 3}0.001{col 54}{space 4}-.9104265{col 67}{space 3}-.2517353
+{txt}{space 12} {c |}
+{space 4}exposure {c |}
+{space 8}I60  {c |}{col 14}{res}{space 2} .9539742{col 26}{space 2} .1257204{col 37}{space 1}    7.59{col 46}{space 3}0.000{col 54}{space 4} .7075668{col 67}{space 3} 1.200382
+{txt}{space 8}I61  {c |}{col 14}{res}{space 2} .6755038{col 26}{space 2} .1160174{col 37}{space 1}    5.82{col 46}{space 3}0.000{col 54}{space 4} .4481138{col 67}{space 3} .9028938
+{txt}{space 8}I64  {c |}{col 14}{res}{space 2} .3350364{col 26}{space 2} .1122188{col 37}{space 1}    2.99{col 46}{space 3}0.003{col 54}{space 4} .1150915{col 67}{space 3} .5549813
+{txt}{space 12} {c |}
+{space 8}edad {c |}{col 14}{res}{space 2} .0122876{col 26}{space 2} .0027535{col 37}{space 1}    4.46{col 46}{space 3}0.000{col 54}{space 4} .0068908{col 67}{space 3} .0176844
+{txt}{space 8}sexo {c |}{col 14}{res}{space 2} .1880531{col 26}{space 2} .0744249{col 37}{space 1}    2.53{col 46}{space 3}0.012{col 54}{space 4}  .042183{col 67}{space 3} .3339232
+{txt}{space 12} {c |}
+{space 7}level {c |}
+{space 8}III  {c |}{col 14}{res}{space 2}        0{col 26}{txt}  (omitted)
+{space 7}_cons {c |}{col 14}{res}{space 2}-5.076846{col 26}{space 2} .3560285{col 37}{space 1}  -14.26{col 46}{space 3}0.000{col 54}{space 4}-5.774649{col 67}{space 3}-4.379043
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}ln_p         {txt}{c |}
+{space 7}level {c |}
+{space 8}III  {c |}{col 14}{res}{space 2}-.0770105{col 26}{space 2} .0577707{col 37}{space 1}   -1.33{col 46}{space 3}0.183{col 54}{space 4} -.190239{col 67}{space 3}  .036218
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .0517473{col 26}{space 2} .0392261{col 37}{space 1}    1.32{col 46}{space 3}0.187{col 54}{space 4}-.0251344{col 67}{space 3}  .128629
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. *AM + Interaction: 
+. *Y = B0 + B1.Level + B2.Exposure + B3.Level.Exposure + B4.confusores
+. streg level i.exposure i.level#i.exposure edad sexo, strata(level) d(weibull)
+
+         {txt}failure _d:  {res}condicion == 2
+   {txt}analysis time _t:  {res}los
+{txt}note: 2.level omitted because of collinearity
+
+Fitting constant-only model:
+{res}
+{txt}{res}{txt}Iteration 0:{space 3}log likelihood = {res:-2929.1917}  
+Iteration 1:{space 3}log likelihood = {res:-2919.8551}  
+Iteration 2:{space 3}log likelihood = {res:-2880.9267}  
+Iteration 3:{space 3}log likelihood = {res:-2880.2076}  
+Iteration 4:{space 3}log likelihood = {res:-2880.2059}  
+Iteration 5:{space 3}log likelihood = {res:-2880.2059}  
+{res}
+{txt}Fitting full model:
+{res}
+{txt}Iteration 0:{space 3}log likelihood = {res:-2880.2059}  
+Iteration 1:{space 3}log likelihood = {res:-2828.3126}  
+Iteration 2:{space 3}log likelihood = {res:-2824.6827}  
+Iteration 3:{space 3}log likelihood = {res:-2824.6734}  
+Iteration 4:{space 3}log likelihood = {res:-2824.6734}  
+{res}
+{txt}Weibull PH regression
+
+No. of subjects = {res}       6,565                  {txt}Number of obs    =  {res}     6,565
+{txt}No. of failures = {res}         757
+{txt}Time at risk    = {res}       61951
+                                                {txt}LR chi2({res}9{txt})       =  {res}    111.07
+{txt}Log likelihood  =   {res}-2824.6734                  {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}_t           {txt}{c |}
+{space 7}level {c |}{col 14}{res}{space 2}-.8360862{col 26}{space 2} .2357232{col 37}{space 1}   -3.55{col 46}{space 3}0.000{col 54}{space 4}-1.298095{col 67}{space 3}-.3740773
+{txt}{space 12} {c |}
+{space 4}exposure {c |}
+{space 8}I60  {c |}{col 14}{res}{space 2} .6228911{col 26}{space 2} .2085521{col 37}{space 1}    2.99{col 46}{space 3}0.003{col 54}{space 4} .2141364{col 67}{space 3} 1.031646
+{txt}{space 8}I61  {c |}{col 14}{res}{space 2} .4972224{col 26}{space 2} .1844539{col 37}{space 1}    2.70{col 46}{space 3}0.007{col 54}{space 4} .1356995{col 67}{space 3} .8587454
+{txt}{space 8}I64  {c |}{col 14}{res}{space 2} .1627237{col 26}{space 2} .1594525{col 37}{space 1}    1.02{col 46}{space 3}0.307{col 54}{space 4}-.1497975{col 67}{space 3} .4752449
+{txt}{space 12} {c |}
+{space 7}level#{c |}
+{space 4}exposure {c |}
+{space 4}III#I60  {c |}{col 14}{res}{space 2} .5130759{col 26}{space 2} .2586223{col 37}{space 1}    1.98{col 46}{space 3}0.047{col 54}{space 4} .0061855{col 67}{space 3} 1.019966
+{txt}{space 4}III#I61  {c |}{col 14}{res}{space 2} .2806803{col 26}{space 2} .2368669{col 37}{space 1}    1.18{col 46}{space 3}0.236{col 54}{space 4}-.1835703{col 67}{space 3}  .744931
+{txt}{space 4}III#I64  {c |}{col 14}{res}{space 2} .2662403{col 26}{space 2} .2276128{col 37}{space 1}    1.17{col 46}{space 3}0.242{col 54}{space 4}-.1798726{col 67}{space 3} .7123532
+{txt}{space 12} {c |}
+{space 8}edad {c |}{col 14}{res}{space 2} .0124547{col 26}{space 2} .0027615{col 37}{space 1}    4.51{col 46}{space 3}0.000{col 54}{space 4} .0070422{col 67}{space 3} .0178671
+{txt}{space 8}sexo {c |}{col 14}{res}{space 2} .1849271{col 26}{space 2} .0744413{col 37}{space 1}    2.48{col 46}{space 3}0.013{col 54}{space 4} .0390249{col 67}{space 3} .3308293
+{txt}{space 12} {c |}
+{space 7}level {c |}
+{space 8}III  {c |}{col 14}{res}{space 2}        0{col 26}{txt}  (omitted)
+{space 7}_cons {c |}{col 14}{res}{space 2}-4.661452{col 26}{space 2} .4455211{col 37}{space 1}  -10.46{col 46}{space 3}0.000{col 54}{space 4}-5.534657{col 67}{space 3}-3.788246
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}ln_p         {txt}{c |}
+{space 7}level {c |}
+{space 8}III  {c |}{col 14}{res}{space 2}-.0839551{col 26}{space 2} .0579952{col 37}{space 1}   -1.45{col 46}{space 3}0.148{col 54}{space 4}-.1976237{col 67}{space 3} .0297134
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .0543198{col 26}{space 2} .0392487{col 37}{space 1}    1.38{col 46}{space 3}0.166{col 54}{space 4}-.0226063{col 67}{space 3}  .131246
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. **********B: xREGIONS********
+. *AM: Y = B0 + B1.Level + B2.Exposure + B3.confusores
+. streg regions i.exposure edad sexo, strata(regions) d(weibull)
+
+         {txt}failure _d:  {res}condicion == 2
+   {txt}analysis time _t:  {res}los
+{txt}note: 4.regions omitted because of collinearity
+
+Fitting constant-only model:
+{res}
+{txt}{res}{txt}Iteration 0:{space 3}log likelihood = {res:-2929.2295}  
+Iteration 1:{space 3}log likelihood = {res: -2884.267}  
+Iteration 2:{space 3}log likelihood = {res:-2878.7732}  
+Iteration 3:{space 3}log likelihood = {res: -2878.743}  
+Iteration 4:{space 3}log likelihood = {res: -2878.743}  
+{res}
+{txt}Fitting full model:
+{res}
+{txt}Iteration 0:{space 3}log likelihood = {res: -2878.743}  
+Iteration 1:{space 3}log likelihood = {res:-2834.7389}  
+Iteration 2:{space 3}log likelihood = {res:-2832.7016}  
+Iteration 3:{space 3}log likelihood = {res:-2832.6961}  
+Iteration 4:{space 3}log likelihood = {res:-2832.6961}  
+{res}
+{txt}Weibull PH regression
+
+No. of subjects = {res}       6,566                  {txt}Number of obs    =  {res}     6,566
+{txt}No. of failures = {res}         757
+{txt}Time at risk    = {res}       61954
+                                                {txt}LR chi2({res}8{txt})       =  {res}     92.09
+{txt}Log likelihood  =   {res}-2832.6961                  {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}_t           {txt}{c |}
+{space 5}regions {c |}{col 14}{res}{space 2} .1075709{col 26}{space 2} .0954743{col 37}{space 1}    1.13{col 46}{space 3}0.260{col 54}{space 4}-.0795553{col 67}{space 3} .2946972
+{txt}{space 12} {c |}
+{space 4}exposure {c |}
+{space 8}I60  {c |}{col 14}{res}{space 2} .8937682{col 26}{space 2} .1265529{col 37}{space 1}    7.06{col 46}{space 3}0.000{col 54}{space 4}  .645729{col 67}{space 3} 1.141807
+{txt}{space 8}I61  {c |}{col 14}{res}{space 2} .6868551{col 26}{space 2} .1165561{col 37}{space 1}    5.89{col 46}{space 3}0.000{col 54}{space 4} .4584094{col 67}{space 3} .9153009
+{txt}{space 8}I64  {c |}{col 14}{res}{space 2} .4743609{col 26}{space 2} .1100115{col 37}{space 1}    4.31{col 46}{space 3}0.000{col 54}{space 4} .2587423{col 67}{space 3} .6899794
+{txt}{space 12} {c |}
+{space 8}edad {c |}{col 14}{res}{space 2} .0125628{col 26}{space 2} .0027703{col 37}{space 1}    4.53{col 46}{space 3}0.000{col 54}{space 4} .0071332{col 67}{space 3} .0179924
+{txt}{space 8}sexo {c |}{col 14}{res}{space 2} .2012924{col 26}{space 2} .0743657{col 37}{space 1}    2.71{col 46}{space 3}0.007{col 54}{space 4} .0555383{col 67}{space 3} .3470465
+{txt}{space 12} {c |}
+{space 5}regions {c |}
+Resto Costa  {c |}{col 14}{res}{space 2} .0781794{col 26}{space 2} .1985869{col 37}{space 1}    0.39{col 46}{space 3}0.694{col 54}{space 4}-.3110437{col 67}{space 3} .4674025
+{txt}{space 5}Sierra  {c |}{col 14}{res}{space 2} .2278856{col 26}{space 2} .2414104{col 37}{space 1}    0.94{col 46}{space 3}0.345{col 54}{space 4}-.2452701{col 67}{space 3} .7010413
+{txt}{space 6}Selva  {c |}{col 14}{res}{space 2}        0{col 26}{txt}  (omitted)
+{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-6.319792{col 26}{space 2}  .298832{col 37}{space 1}  -21.15{col 46}{space 3}0.000{col 54}{space 4}-6.905492{col 67}{space 3}-5.734092
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}ln_p         {txt}{c |}
+{space 5}regions {c |}
+Resto Costa  {c |}{col 14}{res}{space 2} .0113906{col 26}{space 2} .0731346{col 37}{space 1}    0.16{col 46}{space 3}0.876{col 54}{space 4}-.1319506{col 67}{space 3} .1547318
+{txt}{space 5}Sierra  {c |}{col 14}{res}{space 2} .1487783{col 26}{space 2} .0736181{col 37}{space 1}    2.02{col 46}{space 3}0.043{col 54}{space 4} .0044895{col 67}{space 3} .2930671
+{txt}{space 6}Selva  {c |}{col 14}{res}{space 2} .1812636{col 26}{space 2} .1001554{col 37}{space 1}    1.81{col 46}{space 3}0.070{col 54}{space 4}-.0150374{col 67}{space 3} .3775645
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-.0433108{col 26}{space 2} .0463453{col 37}{space 1}   -0.93{col 46}{space 3}0.350{col 54}{space 4} -.134146{col 67}{space 3} .0475244
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. *AM + Interaction: Y = B0 + B1.regions + B2.Exposure + B3.regions.Exposure + B4.confusores
+. streg regions i.exposure i.level#i.exposure edad sexo, strata(regions) d(weibull)
+
+         {txt}failure _d:  {res}condicion == 2
+   {txt}analysis time _t:  {res}los
+{txt}note: 4.regions omitted because of collinearity
+
+Fitting constant-only model:
+{res}
+{txt}{res}{txt}Iteration 0:{space 3}log likelihood = {res:-2929.1917}  
+Iteration 1:{space 3}log likelihood = {res:-2884.2214}  
+Iteration 2:{space 3}log likelihood = {res:-2878.7258}  
+Iteration 3:{space 3}log likelihood = {res:-2878.6955}  
+Iteration 4:{space 3}log likelihood = {res:-2878.6955}  
+{res}
+{txt}Fitting full model:
+{res}
+{txt}Iteration 0:{space 3}log likelihood = {res:-2878.6955}  
+Iteration 1:{space 3}log likelihood = {res: -2813.517}  
+Iteration 2:{space 3}log likelihood = {res:-2808.7138}  
+Iteration 3:{space 3}log likelihood = {res:-2808.7042}  
+Iteration 4:{space 3}log likelihood = {res:-2808.7042}  
+{res}
+{txt}Weibull PH regression
+
+No. of subjects = {res}       6,565                  {txt}Number of obs    =  {res}     6,565
+{txt}No. of failures = {res}         757
+{txt}Time at risk    = {res}       61951
+                                                {txt}LR chi2({res}12{txt})      =  {res}    139.98
+{txt}Log likelihood  =   {res}-2808.7042                  {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}_t           {txt}{c |}
+{space 5}regions {c |}{col 14}{res}{space 2}-.0470034{col 26}{space 2} .0983707{col 37}{space 1}   -0.48{col 46}{space 3}0.633{col 54}{space 4}-.2398065{col 67}{space 3} .1457997
+{txt}{space 12} {c |}
+{space 4}exposure {c |}
+{space 8}I60  {c |}{col 14}{res}{space 2} .5594234{col 26}{space 2}  .209149{col 37}{space 1}    2.67{col 46}{space 3}0.007{col 54}{space 4} .1494989{col 67}{space 3} .9693479
+{txt}{space 8}I61  {c |}{col 14}{res}{space 2} .4942215{col 26}{space 2} .1849231{col 37}{space 1}    2.67{col 46}{space 3}0.008{col 54}{space 4} .1317789{col 67}{space 3} .8566642
+{txt}{space 8}I64  {c |}{col 14}{res}{space 2} .1878392{col 26}{space 2} .1603953{col 37}{space 1}    1.17{col 46}{space 3}0.242{col 54}{space 4}-.1265299{col 67}{space 3} .5022083
+{txt}{space 12} {c |}
+{space 7}level#{c |}
+{space 4}exposure {c |}
+{space 4}III#I63  {c |}{col 14}{res}{space 2}-.8786449{col 26}{space 2} .1929721{col 37}{space 1}   -4.55{col 46}{space 3}0.000{col 54}{space 4}-1.256863{col 67}{space 3}-.5004265
+{txt}{space 4}III#I60  {c |}{col 14}{res}{space 2}-.3492824{col 26}{space 2} .1902814{col 37}{space 1}   -1.84{col 46}{space 3}0.066{col 54}{space 4}-.7222271{col 67}{space 3} .0236623
+{txt}{space 4}III#I61  {c |}{col 14}{res}{space 2}-.5869892{col 26}{space 2}  .156903{col 37}{space 1}   -3.74{col 46}{space 3}0.000{col 54}{space 4}-.8945134{col 67}{space 3}-.2794651
+{txt}{space 4}III#I64  {c |}{col 14}{res}{space 2}-.6818737{col 26}{space 2} .1440433{col 37}{space 1}   -4.73{col 46}{space 3}0.000{col 54}{space 4}-.9641934{col 67}{space 3}-.3995541
+{txt}{space 12} {c |}
+{space 8}edad {c |}{col 14}{res}{space 2} .0118124{col 26}{space 2} .0027767{col 37}{space 1}    4.25{col 46}{space 3}0.000{col 54}{space 4} .0063702{col 67}{space 3} .0172546
+{txt}{space 8}sexo {c |}{col 14}{res}{space 2} .1971312{col 26}{space 2} .0744485{col 37}{space 1}    2.65{col 46}{space 3}0.008{col 54}{space 4} .0512148{col 67}{space 3} .3430476
+{txt}{space 12} {c |}
+{space 5}regions {c |}
+Resto Costa  {c |}{col 14}{res}{space 2}-.0372562{col 26}{space 2} .2002019{col 37}{space 1}   -0.19{col 46}{space 3}0.852{col 54}{space 4}-.4296446{col 67}{space 3} .3551323
+{txt}{space 5}Sierra  {c |}{col 14}{res}{space 2} .1289289{col 26}{space 2}  .243525{col 37}{space 1}    0.53{col 46}{space 3}0.597{col 54}{space 4}-.3483713{col 67}{space 3} .6062291
+{txt}{space 6}Selva  {c |}{col 14}{res}{space 2}        0{col 26}{txt}  (omitted)
+{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-5.390329{col 26}{space 2} .3337347{col 37}{space 1}  -16.15{col 46}{space 3}0.000{col 54}{space 4}-6.044437{col 67}{space 3}-4.736221
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}ln_p         {txt}{c |}
+{space 5}regions {c |}
+Resto Costa  {c |}{col 14}{res}{space 2} .0155264{col 26}{space 2} .0727205{col 37}{space 1}    0.21{col 46}{space 3}0.831{col 54}{space 4}-.1270031{col 67}{space 3} .1580559
+{txt}{space 5}Sierra  {c |}{col 14}{res}{space 2} .1675501{col 26}{space 2} .0731081{col 37}{space 1}    2.29{col 46}{space 3}0.022{col 54}{space 4} .0242609{col 67}{space 3} .3108393
+{txt}{space 6}Selva  {c |}{col 14}{res}{space 2} .1938713{col 26}{space 2} .0993669{col 37}{space 1}    1.95{col 46}{space 3}0.051{col 54}{space 4}-.0008843{col 67}{space 3} .3886268
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-.0327523{col 26}{space 2} .0460896{col 37}{space 1}   -0.71{col 46}{space 3}0.477{col 54}{space 4}-.1230863{col 67}{space 3} .0575817
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. ********COMPARISONS************
+. *XLEVEL
+. streg level i.exposure i.level#i.exposure edad sexo, strata(level) d(weibull)
+
+         {txt}failure _d:  {res}condicion == 2
+   {txt}analysis time _t:  {res}los
+{txt}note: 2.level omitted because of collinearity
+
+Fitting constant-only model:
+{res}
+{txt}{res}{txt}Iteration 0:{space 3}log likelihood = {res:-2929.1917}  
+Iteration 1:{space 3}log likelihood = {res:-2919.8551}  
+Iteration 2:{space 3}log likelihood = {res:-2880.9267}  
+Iteration 3:{space 3}log likelihood = {res:-2880.2076}  
+Iteration 4:{space 3}log likelihood = {res:-2880.2059}  
+Iteration 5:{space 3}log likelihood = {res:-2880.2059}  
+{res}
+{txt}Fitting full model:
+{res}
+{txt}Iteration 0:{space 3}log likelihood = {res:-2880.2059}  
+Iteration 1:{space 3}log likelihood = {res:-2828.3126}  
+Iteration 2:{space 3}log likelihood = {res:-2824.6827}  
+Iteration 3:{space 3}log likelihood = {res:-2824.6734}  
+Iteration 4:{space 3}log likelihood = {res:-2824.6734}  
+{res}
+{txt}Weibull PH regression
+
+No. of subjects = {res}       6,565                  {txt}Number of obs    =  {res}     6,565
+{txt}No. of failures = {res}         757
+{txt}Time at risk    = {res}       61951
+                                                {txt}LR chi2({res}9{txt})       =  {res}    111.07
+{txt}Log likelihood  =   {res}-2824.6734                  {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}_t           {txt}{c |}
+{space 7}level {c |}{col 14}{res}{space 2}-.8360862{col 26}{space 2} .2357232{col 37}{space 1}   -3.55{col 46}{space 3}0.000{col 54}{space 4}-1.298095{col 67}{space 3}-.3740773
+{txt}{space 12} {c |}
+{space 4}exposure {c |}
+{space 8}I60  {c |}{col 14}{res}{space 2} .6228911{col 26}{space 2} .2085521{col 37}{space 1}    2.99{col 46}{space 3}0.003{col 54}{space 4} .2141364{col 67}{space 3} 1.031646
+{txt}{space 8}I61  {c |}{col 14}{res}{space 2} .4972224{col 26}{space 2} .1844539{col 37}{space 1}    2.70{col 46}{space 3}0.007{col 54}{space 4} .1356995{col 67}{space 3} .8587454
+{txt}{space 8}I64  {c |}{col 14}{res}{space 2} .1627237{col 26}{space 2} .1594525{col 37}{space 1}    1.02{col 46}{space 3}0.307{col 54}{space 4}-.1497975{col 67}{space 3} .4752449
+{txt}{space 12} {c |}
+{space 7}level#{c |}
+{space 4}exposure {c |}
+{space 4}III#I60  {c |}{col 14}{res}{space 2} .5130759{col 26}{space 2} .2586223{col 37}{space 1}    1.98{col 46}{space 3}0.047{col 54}{space 4} .0061855{col 67}{space 3} 1.019966
+{txt}{space 4}III#I61  {c |}{col 14}{res}{space 2} .2806803{col 26}{space 2} .2368669{col 37}{space 1}    1.18{col 46}{space 3}0.236{col 54}{space 4}-.1835703{col 67}{space 3}  .744931
+{txt}{space 4}III#I64  {c |}{col 14}{res}{space 2} .2662403{col 26}{space 2} .2276128{col 37}{space 1}    1.17{col 46}{space 3}0.242{col 54}{space 4}-.1798726{col 67}{space 3} .7123532
+{txt}{space 12} {c |}
+{space 8}edad {c |}{col 14}{res}{space 2} .0124547{col 26}{space 2} .0027615{col 37}{space 1}    4.51{col 46}{space 3}0.000{col 54}{space 4} .0070422{col 67}{space 3} .0178671
+{txt}{space 8}sexo {c |}{col 14}{res}{space 2} .1849271{col 26}{space 2} .0744413{col 37}{space 1}    2.48{col 46}{space 3}0.013{col 54}{space 4} .0390249{col 67}{space 3} .3308293
+{txt}{space 12} {c |}
+{space 7}level {c |}
+{space 8}III  {c |}{col 14}{res}{space 2}        0{col 26}{txt}  (omitted)
+{space 7}_cons {c |}{col 14}{res}{space 2}-4.661452{col 26}{space 2} .4455211{col 37}{space 1}  -10.46{col 46}{space 3}0.000{col 54}{space 4}-5.534657{col 67}{space 3}-3.788246
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}ln_p         {txt}{c |}
+{space 7}level {c |}
+{space 8}III  {c |}{col 14}{res}{space 2}-.0839551{col 26}{space 2} .0579952{col 37}{space 1}   -1.45{col 46}{space 3}0.148{col 54}{space 4}-.1976237{col 67}{space 3} .0297134
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .0543198{col 26}{space 2} .0392487{col 37}{space 1}    1.38{col 46}{space 3}0.166{col 54}{space 4}-.0226063{col 67}{space 3}  .131246
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. estimates store m1
+{txt}
+{com}. streg level i.exposure edad sexo, strata(level) d(weibull)
+
+         {txt}failure _d:  {res}condicion == 2
+   {txt}analysis time _t:  {res}los
+{txt}note: 2.level omitted because of collinearity
+
+Fitting constant-only model:
+{res}
+{txt}{res}{txt}Iteration 0:{space 3}log likelihood = {res:-2929.1917}  
+Iteration 1:{space 3}log likelihood = {res:-2919.8551}  
+Iteration 2:{space 3}log likelihood = {res:-2880.9267}  
+Iteration 3:{space 3}log likelihood = {res:-2880.2076}  
+Iteration 4:{space 3}log likelihood = {res:-2880.2059}  
+Iteration 5:{space 3}log likelihood = {res:-2880.2059}  
+{res}
+{txt}Fitting full model:
+{res}
+{txt}Iteration 0:{space 3}log likelihood = {res:-2880.2059}  
+Iteration 1:{space 3}log likelihood = {res:-2829.8715}  
+Iteration 2:{space 3}log likelihood = {res:-2826.6585}  
+Iteration 3:{space 3}log likelihood = {res:-2826.6474}  
+Iteration 4:{space 3}log likelihood = {res:-2826.6474}  
+{res}
+{txt}Weibull PH regression
+
+No. of subjects = {res}       6,565                  {txt}Number of obs    =  {res}     6,565
+{txt}No. of failures = {res}         757
+{txt}Time at risk    = {res}       61951
+                                                {txt}LR chi2({res}6{txt})       =  {res}    107.12
+{txt}Log likelihood  =   {res}-2826.6474                  {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}_t           {txt}{c |}
+{space 7}level {c |}{col 14}{res}{space 2}-.5810809{col 26}{space 2} .1680366{col 37}{space 1}   -3.46{col 46}{space 3}0.001{col 54}{space 4}-.9104265{col 67}{space 3}-.2517353
+{txt}{space 12} {c |}
+{space 4}exposure {c |}
+{space 8}I60  {c |}{col 14}{res}{space 2} .9539742{col 26}{space 2} .1257204{col 37}{space 1}    7.59{col 46}{space 3}0.000{col 54}{space 4} .7075668{col 67}{space 3} 1.200382
+{txt}{space 8}I61  {c |}{col 14}{res}{space 2} .6755038{col 26}{space 2} .1160174{col 37}{space 1}    5.82{col 46}{space 3}0.000{col 54}{space 4} .4481138{col 67}{space 3} .9028938
+{txt}{space 8}I64  {c |}{col 14}{res}{space 2} .3350364{col 26}{space 2} .1122188{col 37}{space 1}    2.99{col 46}{space 3}0.003{col 54}{space 4} .1150915{col 67}{space 3} .5549813
+{txt}{space 12} {c |}
+{space 8}edad {c |}{col 14}{res}{space 2} .0122876{col 26}{space 2} .0027535{col 37}{space 1}    4.46{col 46}{space 3}0.000{col 54}{space 4} .0068908{col 67}{space 3} .0176844
+{txt}{space 8}sexo {c |}{col 14}{res}{space 2} .1880531{col 26}{space 2} .0744249{col 37}{space 1}    2.53{col 46}{space 3}0.012{col 54}{space 4}  .042183{col 67}{space 3} .3339232
+{txt}{space 12} {c |}
+{space 7}level {c |}
+{space 8}III  {c |}{col 14}{res}{space 2}        0{col 26}{txt}  (omitted)
+{space 7}_cons {c |}{col 14}{res}{space 2}-5.076846{col 26}{space 2} .3560285{col 37}{space 1}  -14.26{col 46}{space 3}0.000{col 54}{space 4}-5.774649{col 67}{space 3}-4.379043
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}ln_p         {txt}{c |}
+{space 7}level {c |}
+{space 8}III  {c |}{col 14}{res}{space 2}-.0770105{col 26}{space 2} .0577707{col 37}{space 1}   -1.33{col 46}{space 3}0.183{col 54}{space 4} -.190239{col 67}{space 3}  .036218
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .0517473{col 26}{space 2} .0392261{col 37}{space 1}    1.32{col 46}{space 3}0.187{col 54}{space 4}-.0251344{col 67}{space 3}  .128629
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. lrtest . m1
+
+{txt}Likelihood-ratio test{col 55}LR chi2({res}3{txt}){col 67}={res}      3.95
+{txt}(Assumption: {res}{stata est replay .:.}{txt} nested in {res}{stata est replay m1:m1}{txt}){col 55}Prob > chi2 = {res}   0.2671
+{txt}
+{com}. 
+. *xREGIONS
+. streg regions i.exposure i.regions#i.exposure edad sexo, strata(regions) d(weibull)
+
+         {txt}failure _d:  {res}condicion == 2
+   {txt}analysis time _t:  {res}los
+{txt}note: 4.regions omitted because of collinearity
+
+Fitting constant-only model:
+{res}
+{txt}{res}{txt}Iteration 0:{space 3}log likelihood = {res:-2929.2295}  
+Iteration 1:{space 3}log likelihood = {res: -2884.267}  
+Iteration 2:{space 3}log likelihood = {res:-2878.7732}  
+Iteration 3:{space 3}log likelihood = {res: -2878.743}  
+Iteration 4:{space 3}log likelihood = {res: -2878.743}  
+{res}
+{txt}Fitting full model:
+{res}
+{txt}Iteration 0:{space 3}log likelihood = {res: -2878.743}  
+Iteration 1:{space 3}log likelihood = {res:-2829.4709}  
+Iteration 2:{space 3}log likelihood = {res:-2826.0603}  
+Iteration 3:{space 3}log likelihood = {res:-2826.0524}  
+Iteration 4:{space 3}log likelihood = {res:-2826.0524}  
+{res}
+{txt}Weibull PH regression
+
+No. of subjects = {res}       6,566                  {txt}Number of obs    =  {res}     6,566
+{txt}No. of failures = {res}         757
+{txt}Time at risk    = {res}       61954
+                                                {txt}LR chi2({res}17{txt})      =  {res}    105.38
+{txt}Log likelihood  =   {res}-2826.0524                  {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}_t           {txt}{c |}
+{space 5}regions {c |}{col 14}{res}{space 2} .2499301{col 26}{space 2} .1438841{col 37}{space 1}    1.74{col 46}{space 3}0.082{col 54}{space 4}-.0320776{col 67}{space 3} .5319379
+{txt}{space 12} {c |}
+{space 4}exposure {c |}
+{space 8}I60  {c |}{col 14}{res}{space 2}  1.07208{col 26}{space 2} .1672433{col 37}{space 1}    6.41{col 46}{space 3}0.000{col 54}{space 4} .7442896{col 67}{space 3} 1.399871
+{txt}{space 8}I61  {c |}{col 14}{res}{space 2} .5784299{col 26}{space 2} .1675476{col 37}{space 1}    3.45{col 46}{space 3}0.001{col 54}{space 4} .2500427{col 67}{space 3} .9068171
+{txt}{space 8}I64  {c |}{col 14}{res}{space 2} .4859637{col 26}{space 2} .1635551{col 37}{space 1}    2.97{col 46}{space 3}0.003{col 54}{space 4} .1654016{col 67}{space 3} .8065258
+{txt}{space 12} {c |}
+{space 5}regions#{c |}
+{space 4}exposure {c |}
+Resto Costa #{c |}
+{space 8}I60  {c |}{col 14}{res}{space 2}-.1123341{col 26}{space 2} .3646895{col 37}{space 1}   -0.31{col 46}{space 3}0.758{col 54}{space 4}-.8271123{col 67}{space 3} .6024442
+{txt}Resto Costa #{c |}
+{space 8}I61  {c |}{col 14}{res}{space 2} .5504854{col 26}{space 2} .3080576{col 37}{space 1}    1.79{col 46}{space 3}0.074{col 54}{space 4}-.0532964{col 67}{space 3} 1.154267
+{txt}Resto Costa #{c |}
+{space 8}I64  {c |}{col 14}{res}{space 2} .3933488{col 26}{space 2} .3003417{col 37}{space 1}    1.31{col 46}{space 3}0.190{col 54}{space 4}-.1953102{col 67}{space 3} .9820077
+{txt}{space 1}Sierra#I60  {c |}{col 14}{res}{space 2}-.5001864{col 26}{space 2} .3199727{col 37}{space 1}   -1.56{col 46}{space 3}0.118{col 54}{space 4}-1.127321{col 67}{space 3} .1269486
+{txt}{space 1}Sierra#I61  {c |}{col 14}{res}{space 2}-.1316136{col 26}{space 2} .3110648{col 37}{space 1}   -0.42{col 46}{space 3}0.672{col 54}{space 4}-.7412895{col 67}{space 3} .4780623
+{txt}{space 1}Sierra#I64  {c |}{col 14}{res}{space 2}-.2883392{col 26}{space 2} .2789699{col 37}{space 1}   -1.03{col 46}{space 3}0.301{col 54}{space 4}-.8351102{col 67}{space 3} .2584318
+{txt}{space 2}Selva#I60  {c |}{col 14}{res}{space 2}-.7802749{col 26}{space 2} .4370276{col 37}{space 1}   -1.79{col 46}{space 3}0.074{col 54}{space 4}-1.636833{col 67}{space 3} .0762834
+{txt}{space 2}Selva#I61  {c |}{col 14}{res}{space 2}-.0037518{col 26}{space 2} .4683624{col 37}{space 1}   -0.01{col 46}{space 3}0.994{col 54}{space 4}-.9217253{col 67}{space 3} .9142216
+{txt}{space 2}Selva#I64  {c |}{col 14}{res}{space 2}-.5193462{col 26}{space 2} .4047307{col 37}{space 1}   -1.28{col 46}{space 3}0.199{col 54}{space 4}-1.312604{col 67}{space 3} .2739115
+{txt}{space 12} {c |}
+{space 8}edad {c |}{col 14}{res}{space 2} .0128441{col 26}{space 2} .0027838{col 37}{space 1}    4.61{col 46}{space 3}0.000{col 54}{space 4} .0073881{col 67}{space 3} .0183002
+{txt}{space 8}sexo {c |}{col 14}{res}{space 2} .2010222{col 26}{space 2} .0746955{col 37}{space 1}    2.69{col 46}{space 3}0.007{col 54}{space 4} .0546216{col 67}{space 3} .3474227
+{txt}{space 12} {c |}
+{space 5}regions {c |}
+Resto Costa  {c |}{col 14}{res}{space 2}-.4004592{col 26}{space 2}  .317383{col 37}{space 1}   -1.26{col 46}{space 3}0.207{col 54}{space 4}-1.022518{col 67}{space 3}    .2216
+{txt}{space 5}Sierra  {c |}{col 14}{res}{space 2}  .184864{col 26}{space 2} .3683894{col 37}{space 1}    0.50{col 46}{space 3}0.616{col 54}{space 4} -.537166{col 67}{space 3} .9068939
+{txt}{space 6}Selva  {c |}{col 14}{res}{space 2}        0{col 26}{txt}  (omitted)
+{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} -6.48459{col 26}{space 2} .3358511{col 37}{space 1}  -19.31{col 46}{space 3}0.000{col 54}{space 4}-7.142846{col 67}{space 3}-5.826334
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}ln_p         {txt}{c |}
+{space 5}regions {c |}
+Resto Costa  {c |}{col 14}{res}{space 2} .0185254{col 26}{space 2} .0736127{col 37}{space 1}    0.25{col 46}{space 3}0.801{col 54}{space 4}-.1257528{col 67}{space 3} .1628037
+{txt}{space 5}Sierra  {c |}{col 14}{res}{space 2} .1559464{col 26}{space 2}   .07407{col 37}{space 1}    2.11{col 46}{space 3}0.035{col 54}{space 4} .0107718{col 67}{space 3} .3011209
+{txt}{space 6}Selva  {c |}{col 14}{res}{space 2} .1825722{col 26}{space 2} .1031093{col 37}{space 1}    1.77{col 46}{space 3}0.077{col 54}{space 4}-.0195184{col 67}{space 3} .3846628
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-.0490639{col 26}{space 2}  .046617{col 37}{space 1}   -1.05{col 46}{space 3}0.293{col 54}{space 4}-.1404316{col 67}{space 3} .0423039
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. estimates store m2
+{txt}
+{com}. streg regions i.exposure edad sexo, strata(regions) d(weibull)
+
+         {txt}failure _d:  {res}condicion == 2
+   {txt}analysis time _t:  {res}los
+{txt}note: 4.regions omitted because of collinearity
+
+Fitting constant-only model:
+{res}
+{txt}{res}{txt}Iteration 0:{space 3}log likelihood = {res:-2929.2295}  
+Iteration 1:{space 3}log likelihood = {res: -2884.267}  
+Iteration 2:{space 3}log likelihood = {res:-2878.7732}  
+Iteration 3:{space 3}log likelihood = {res: -2878.743}  
+Iteration 4:{space 3}log likelihood = {res: -2878.743}  
+{res}
+{txt}Fitting full model:
+{res}
+{txt}Iteration 0:{space 3}log likelihood = {res: -2878.743}  
+Iteration 1:{space 3}log likelihood = {res:-2834.7389}  
+Iteration 2:{space 3}log likelihood = {res:-2832.7016}  
+Iteration 3:{space 3}log likelihood = {res:-2832.6961}  
+Iteration 4:{space 3}log likelihood = {res:-2832.6961}  
+{res}
+{txt}Weibull PH regression
+
+No. of subjects = {res}       6,566                  {txt}Number of obs    =  {res}     6,566
+{txt}No. of failures = {res}         757
+{txt}Time at risk    = {res}       61954
+                                                {txt}LR chi2({res}8{txt})       =  {res}     92.09
+{txt}Log likelihood  =   {res}-2832.6961                  {txt}Prob > chi2      =  {res}    0.0000
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          _t{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}_t           {txt}{c |}
+{space 5}regions {c |}{col 14}{res}{space 2} .1075709{col 26}{space 2} .0954743{col 37}{space 1}    1.13{col 46}{space 3}0.260{col 54}{space 4}-.0795553{col 67}{space 3} .2946972
+{txt}{space 12} {c |}
+{space 4}exposure {c |}
+{space 8}I60  {c |}{col 14}{res}{space 2} .8937682{col 26}{space 2} .1265529{col 37}{space 1}    7.06{col 46}{space 3}0.000{col 54}{space 4}  .645729{col 67}{space 3} 1.141807
+{txt}{space 8}I61  {c |}{col 14}{res}{space 2} .6868551{col 26}{space 2} .1165561{col 37}{space 1}    5.89{col 46}{space 3}0.000{col 54}{space 4} .4584094{col 67}{space 3} .9153009
+{txt}{space 8}I64  {c |}{col 14}{res}{space 2} .4743609{col 26}{space 2} .1100115{col 37}{space 1}    4.31{col 46}{space 3}0.000{col 54}{space 4} .2587423{col 67}{space 3} .6899794
+{txt}{space 12} {c |}
+{space 8}edad {c |}{col 14}{res}{space 2} .0125628{col 26}{space 2} .0027703{col 37}{space 1}    4.53{col 46}{space 3}0.000{col 54}{space 4} .0071332{col 67}{space 3} .0179924
+{txt}{space 8}sexo {c |}{col 14}{res}{space 2} .2012924{col 26}{space 2} .0743657{col 37}{space 1}    2.71{col 46}{space 3}0.007{col 54}{space 4} .0555383{col 67}{space 3} .3470465
+{txt}{space 12} {c |}
+{space 5}regions {c |}
+Resto Costa  {c |}{col 14}{res}{space 2} .0781794{col 26}{space 2} .1985869{col 37}{space 1}    0.39{col 46}{space 3}0.694{col 54}{space 4}-.3110437{col 67}{space 3} .4674025
+{txt}{space 5}Sierra  {c |}{col 14}{res}{space 2} .2278856{col 26}{space 2} .2414104{col 37}{space 1}    0.94{col 46}{space 3}0.345{col 54}{space 4}-.2452701{col 67}{space 3} .7010413
+{txt}{space 6}Selva  {c |}{col 14}{res}{space 2}        0{col 26}{txt}  (omitted)
+{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-6.319792{col 26}{space 2}  .298832{col 37}{space 1}  -21.15{col 46}{space 3}0.000{col 54}{space 4}-6.905492{col 67}{space 3}-5.734092
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}ln_p         {txt}{c |}
+{space 5}regions {c |}
+Resto Costa  {c |}{col 14}{res}{space 2} .0113906{col 26}{space 2} .0731346{col 37}{space 1}    0.16{col 46}{space 3}0.876{col 54}{space 4}-.1319506{col 67}{space 3} .1547318
+{txt}{space 5}Sierra  {c |}{col 14}{res}{space 2} .1487783{col 26}{space 2} .0736181{col 37}{space 1}    2.02{col 46}{space 3}0.043{col 54}{space 4} .0044895{col 67}{space 3} .2930671
+{txt}{space 6}Selva  {c |}{col 14}{res}{space 2} .1812636{col 26}{space 2} .1001554{col 37}{space 1}    1.81{col 46}{space 3}0.070{col 54}{space 4}-.0150374{col 67}{space 3} .3775645
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-.0433108{col 26}{space 2} .0463453{col 37}{space 1}   -0.93{col 46}{space 3}0.350{col 54}{space 4} -.134146{col 67}{space 3} .0475244
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. lrtest . m2, force
+
+{txt}Likelihood-ratio test{col 55}LR chi2({res}9{txt}){col 67}={res}     13.29
+{txt}(Assumption: {res}{stata est replay .:.}{txt} nested in {res}{stata est replay m2:m2}{txt}){col 55}Prob > chi2 = {res}   0.1500
+{txt}
+{com}. 
+. 
+. *streg i.exposure edad sexo regions#exposure level#exposure, strata(regions) d(weibull)
+. *streg i.exposure edad sexo regions#exposure level#exposure, strata(level) d(weibull)
+. 
+. 
+{txt}end of do-file
+
+{com}. log off
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\users\init5\Mis Documentos\stata\interactions.smcl
+  {txt}log type:  {res}smcl
+ {txt}paused on:  {res}18 Oct 2020, 17:47:51
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
